@@ -11,6 +11,9 @@ import SignUpPage from "@/pages/sign-up-page";
 import BePartnerPage from "@/pages/be-partner-page";
 import SignUpPartnersPage from "@/pages/sign-up-partners-page";
 import ChooseServicePage from "@/pages/choose-service-page";
+import ProfilePage from "@/pages/profile-page";
+import DashboardLayout from "@/layouts/dashboard-layout";
+import DashboardStats from "@/pages/dashboard-stats";
 
 const router = createBrowserRouter([
     {
@@ -51,6 +54,26 @@ const router = createBrowserRouter([
                 path: "choose-service",
                 element: <ChooseServicePage />
             }
+        ],
+    },
+    {
+        path: "/profile",
+        element: <MainLayout />,
+        children: [
+            {
+                index: true,
+                element: <ProfilePage />
+            },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: <DashboardLayout />,
+        children: [
+            {
+                index: true,
+                element: <DashboardStats />
+            },
         ],
     },
     {

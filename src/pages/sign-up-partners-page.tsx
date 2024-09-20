@@ -26,7 +26,7 @@ const schema = yup
     .required()
 
 const input: string = "w-[400px] h-[48px] mb-2";
-const error: string = "text-sm text-color5";
+const error: string = "text-sm text-red-400";
 
 function SignUpPartnersPage() {
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -43,7 +43,7 @@ function SignUpPartnersPage() {
     return (
         <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex items-center justify-center gap-x-2 text-color3 font-bold">
+                <div className="flex items-center justify-center gap-x-[4px] text-color2 font-bold">
                     <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
                     OVERMATE
                 </div>
@@ -98,13 +98,13 @@ function SignUpPartnersPage() {
                         htmlFor="terms"
                         className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                        Bằng cách đăng ký, bạn xác nhận rằng bạn đồng ý với việc <span className="text-color3">Overmate</span> lưu trữ và xử lý dữ liệu doanh nghiệp của bạn như được mô tả trong Chính sách <span className="text-color3">quyền riêng tư</span> của chúng tôi.
+                        Bằng cách đăng ký, bạn xác nhận rằng bạn đồng ý với việc <span className="text-color2">Overmate</span> lưu trữ và xử lý dữ liệu doanh nghiệp của bạn như được mô tả trong Chính sách <span className="text-color2">quyền riêng tư</span> của chúng tôi.
                     </label>
                 </p>
                 <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />
                 <p className="flex gap-x-4 justify-center items-center text-sm">
                     Bạn đã có tài khoản?
-                    <Link className="text-color5" to={"/sign-in"}>Đăng nhập ngay</Link>
+                    <Link className="text-red-400" to={"/sign-in"}>Đăng nhập ngay</Link>
                 </p>
             </form>
         </section >

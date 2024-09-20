@@ -2,7 +2,7 @@ function AboutUsPage() {
     return (
         <section className="h-fit px-[10%] py-[10%] bg-[url('./assets/imgs/bg_about.png')] bg-cover bg-color1">
             <div className="w-[50%]">
-                <div className="flex items-center gap-x-2 justify-center">
+                <div className="flex items-center gap-x-[4px] justify-center">
                     <img className="w-[200px]" src="/About1.png" alt="About1" />
                     <p className="text-color2 text-center text-5xl font-semibold">OVERMATE</p>
                 </div>

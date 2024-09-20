@@ -28,7 +28,7 @@ function CallToAction() {
                 </p>
             </div>
             <div className="mt-12 flex items-center justify-center">
-                <Button asChild className="animate-bounce h-12 bg-color3 font-bold hover:bg-color5">
+                <Button asChild className="animate-bounce h-12 bg-color2 font-bold hover:bg-color3">
                     <Link to={"sign-up"}>Bắt đầu ngay bây giờ</Link>
                 </Button>
             </div>

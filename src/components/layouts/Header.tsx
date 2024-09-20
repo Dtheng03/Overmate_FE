@@ -8,8 +8,8 @@ function Header() {
     const pathname = useLocation().pathname;
 
     return (
-        <header className="px-[5%] h-[58px] flex items-center justify-between bg-color1 text-white">
-            <Link to={"/"} className="text-color2 font-bold flex items-center gap-x-2">
+        <header className="fixed z-[9999] px-[5%] w-full h-[58px] flex items-center justify-between bg-color1 text-white shadow-md shadow-color1">
+            <Link to={"/"} className="text-color2 font-bold flex items-center gap-x-[4px]">
                 <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
                 OVERMATE
             </Link>

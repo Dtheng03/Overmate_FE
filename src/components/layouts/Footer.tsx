@@ -6,9 +6,9 @@ const subtitle: string = "mb-[8px] text-sm text-slate-300";
 
 function Footer() {
     return (
-        <footer className="px-[5%] py-[5%] h-[440px] flex gap-x-[28px] bg-color1 text-white">
+        <footer className="px-[5%] py-[5%] h-fit flex gap-x-[28px] bg-color1 text-white">
             <div className="basis-1/5">
-                <Link to={"/"} className="text-color2 font-extrabold text-xl flex items-center gap-x-2">
+                <Link to={"/"} className="text-color2 font-extrabold text-xl flex items-center gap-x-[4px]">
                     <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
                     OVERMATE
                 </Link>

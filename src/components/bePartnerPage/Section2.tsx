@@ -6,7 +6,7 @@ function Section2() {
             <div className="">
                 <h1 className="mb-12 text-color1 text-4xl font-bold">
                     Đăng ký trở thành đối tác <br />
-                    của <span className="text-color4">Overmate</span> và <br />
+                    của <span className="text-color2">Overmate</span> và <br />
                     bắt đầu chào đón khách <br />
                     hàng ngay ngày hôm nay!
                 </h1>

@@ -31,11 +31,11 @@ function Benefits() {
                         </div>
                         <div className="mb-4">
                             <h4 className={h4}><StarIcon fill="purple" height={20} width={20} />Được thanh toán một cách an toàn</h4>
-                            <p>Nhận các khoản thanh toán được đảm bảo và chống gian lận thông qua Thanh toán của <span className="text-color3">Overmate</span></p>
+                            <p>Nhận các khoản thanh toán được đảm bảo và chống gian lận thông qua Thanh toán của <span className="text-color2">Overmate</span></p>
                         </div>
                         <div className="mb-4">
                             <h4 className={h4}><StarIcon fill="purple" height={20} width={20} />Người dùng đã được xác thực</h4>
-                            <p>Xác minh địa chỉ email và thẻ tín dụng của khách dành cho đối tác trên thanh toán của <span className="text-color3">Overmate</span></p>
+                            <p>Xác minh địa chỉ email và thẻ tín dụng của khách dành cho đối tác trên thanh toán của <span className="text-color2">Overmate</span></p>
                         </div>
                     </div>
                 </TabsContent>
@@ -46,7 +46,7 @@ function Benefits() {
                             <div className="basis-2/5 mb-4 flex flex-col items-center">
                                 <img className="h-[144px] w-[144px]" src="benefit1.png" alt="benefit1" />
                                 <h4 className={h4}>Nhập đánh giá của bạn</h4>
-                                <p className="text-sm">Chúng tôi nhập điểm đánh giá của bạn từ các nền tảng khác và hiển thị trên trang <span className="text-color3">Overmate</span> cho bạn, do đó bạn sẽ không bắt đầu từ con số 0</p>
+                                <p className="text-sm">Chúng tôi nhập điểm đánh giá của bạn từ các nền tảng khác và hiển thị trên trang <span className="text-color2">Overmate</span> cho bạn, do đó bạn sẽ không bắt đầu từ con số 0</p>
                             </div>
                             <div className="basis-2/5 mb-4 flex flex-col items-center">
                                 <img className="h-[144px] w-[144px]" src="benefit2.png" alt="benefit2" />
