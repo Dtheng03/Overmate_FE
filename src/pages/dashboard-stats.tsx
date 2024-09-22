@@ -28,57 +28,61 @@ const chartData = [
 function DashboardStats() {
     return (
         <section className="min-h-screen p-[4%] bg-color1">
-            <h2 className="py-2 rounded-lg bg-color3 text-color4 text-center text-xl font-bold">
-                Hôm nay <span className="text-white font-normal">(01/11/2024)</span>
-            </h2>
+            <div className="basis-[30%] p-0.5 rounded-lg bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <h2 className="py-2 rounded-lg bg-color1 text-color4 text-center text-xl font-bold">
+                    Hôm nay <span className="text-white font-normal">(01/11/2024)</span>
+                </h2>
+            </div>
             <div className="mt-4 flex gap-x-4">
-                <div className="basis-1/4 p-[2%] bg-color2 rounded-lg">
+                <div className="basis-1/4 p-[2%] bg-white rounded-lg">
                     <h3 className="text-color1 text-lg font-bold text-center">Người dùng</h3>
-                    <div className="mt-2 flex justify-between text-white">
+                    <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
                             200
                             <Up fill="white" height={16} width={16} />
                         </div>
-                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color4">
+                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
                             <Users fill="white" height={20} width={20} />
                         </div>
                     </div>
-                    <p className="text-xs text-white font-light">Tăng <span className="font-bold">30%</span> so với hôm qua </p>
+                    <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">30%</span> so với hôm qua </p>
                 </div>
-                <div className="basis-1/4 p-[2%] bg-color2 rounded-lg">
+                <div className="basis-1/4 p-[2%] bg-white rounded-lg">
                     <h3 className="text-color1 text-lg font-bold text-center">Doanh thu</h3>
-                    <div className="mt-2 flex justify-between text-white">
+                    <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
                             1086
                             <Up fill="white" height={16} width={16} />
                         </div>
-                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color4">
+                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
                             <Stats fill="white" height={20} width={20} />
                         </div>
                     </div>
-                    <p className="text-xs text-white font-light">Tăng <span className="font-bold">49.9%</span> so với hôm qua </p>
+                    <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">49.9%</span> so với hôm qua </p>
                 </div>
-                <div className="basis-1/2 p-[2%] bg-color2 rounded-lg">
+                <div className="basis-1/2 p-[2%] bg-white rounded-lg">
                     <h3 className="text-color1 text-lg font-bold text-center">Doanh thu</h3>
-                    <div className="mt-2 flex gap-x-4 text-white">
-                        <div className="basis-1/3 p-1 bg-color1 rounded-lg">
+                    <div className="mt-2 flex gap-x-4 text-color1 font-bold">
+                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
                             <h4 className="text-center">Gói kết nối</h4>
                             <p className="text-center">5</p>
                         </div>
-                        <div className="basis-1/3 p-1 bg-color1 rounded-lg">
+                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
                             <h4 className="text-center">Gói bạn bè </h4>
                             <p className="text-center">3</p>
                         </div>
-                        <div className="basis-1/3 p-1 bg-color1 rounded-lg">
+                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
                             <h4 className="text-center">Gói tri kỉ</h4>
                             <p className="text-center">1</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <h2 className="mt-12 py-2 rounded-lg bg-color3 text-color4 text-center text-xl font-bold">
-                Quý 4 <span className="text-white font-normal">(2024)</span>
-            </h2>
+            <div className="mt-12 basis-[30%] p-0.5 rounded-lg bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <h2 className="py-2 rounded-lg bg-color1 text-color4 text-center text-xl font-bold">
+                    Quý 4 <span className="text-white font-normal">(2024)</span>
+                </h2>
+            </div>
             <div className="mt-4 flex">
                 <ChartContainer config={chartConfig} className="basis-1/2 min-h-[200px] bg-white rounded-lg">
                     <BarChart accessibilityLayer data={chartData}>

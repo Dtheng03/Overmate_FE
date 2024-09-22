@@ -2,13 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import { Services, Stats, Users } from "../icons/dashboard";
 
 const menuItem: string = "mt-4 pl-8 py-2 flex items-center gap-x-4 text-xl font-semibold text-white";
-const isSelected: string = "bg-color2";
+const isSelected: string = "bg-color2 rounded-r-[20px]";
 
 function Sidebar() {
     const pathname = useLocation().pathname;
 
     return (
-        <div className="w-[280px] min-h-screen bg-color1/95">
+        <div className="w-[240px] min-h-screen bg-color1">
             <div className="pl-4 py-4 text-color2 font-bold flex items-center gap-x-[4px]">
                 <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
                 OVERMATE
