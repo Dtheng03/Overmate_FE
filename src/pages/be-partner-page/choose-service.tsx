@@ -3,7 +3,7 @@ import MyButton from "@/components/commons/MyButton";
 const div: string = "basis-1/4 flex flex-col justify-center items-center";
 const btn: string = "mt-4 w-[120px] rounded-[50px]";
 
-function ChooseServicePage() {
+function ChooseService() {
     return (
         <section className="px-[10%] py-[5%]">
             <h1 className="mb-12 font-extrabold text-4xl text-center">Dịch vụ cung cấp</h1>
@@ -25,4 +25,4 @@ function ChooseServicePage() {
     );
 }
 
-export default ChooseServicePage;
+export default ChooseService;

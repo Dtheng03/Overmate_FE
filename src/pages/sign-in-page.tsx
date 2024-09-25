@@ -1,9 +1,9 @@
-import { SubmitHandler, useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import MyButton from "@/components/commons/MyButton"
-import { Input } from "@/components/ui/input"
 import { Link } from "react-router-dom"
+import { Input } from "@/components/ui/input"
+import MyButton from "@/components/commons/MyButton"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { FacebookIcon, GoogleIcon } from "@/components/icons/brands"
 
 interface FormValues {
@@ -33,13 +33,13 @@ function SignInPage() {
     const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
 
     return (
-        <section className="h-[calc(100vh-58px)] flex items-center justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
+        <section className="h-[calc(100vh-58px)] py-8 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex items-center justify-center gap-x-2 text-color2 font-bold">
                     <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
                     OVERMATE
                 </div>
-                <div className="my-12 flex gap-x-4">
+                <div className="my-8 flex gap-x-4">
                     <MyButton
                         classname={social}
                         title="Google"

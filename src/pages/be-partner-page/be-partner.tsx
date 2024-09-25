@@ -2,7 +2,7 @@ import Benefits from "@/components/bePartnerPage/Benefits";
 import Section1 from "@/components/bePartnerPage/Section1";
 import Section2 from "@/components/bePartnerPage/Section2";
 
-function BePartnerPage() {
+function BePartner() {
     return (
         <main>
             <Section1 />
@@ -12,4 +12,4 @@ function BePartnerPage() {
     );
 }
 
-export default BePartnerPage;
+export default BePartner;

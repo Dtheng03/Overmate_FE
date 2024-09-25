@@ -11,7 +11,7 @@ interface MyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 function MyButton({ title, classname, icon, ...props }: MyButtonProps) {
     return (
         <Button
-            className={`flex gap-x-2 bg-color2 hover:bg-color3 ${classname}`}
+            className={`flex gap-x-2 bg-color1 hover:bg-color2 ${classname}`}
             {...props}
         >
             {icon}

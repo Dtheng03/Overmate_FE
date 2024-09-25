@@ -14,12 +14,12 @@ function Header() {
                 OVERMATE
             </Link>
             <div className="flex gap-x-[16px]">
-                <Link to={"/about-us"} className={`${menuItem} ${pathname == "/about-us" && isSelected}`}>Về chúng tôi</Link>
-                <Link to={"/about-test"} className={`${menuItem} ${pathname == "/about-test" && isSelected}`}>Bài kiểm tra</Link>
-                <Link to={"/"} className={`${menuItem}`}>Dịch vụ</Link>
-                <Link to={"/about-partners"} className={`${menuItem} ${pathname == "/about-partners" && isSelected}`}>Đối tác</Link>
-                <Link to={"/"} className={`${menuItem}`}>Hỗ trợ</Link>
-                <Link to={"/be-partner"} className={`${menuItem} ${pathname == "/be-partner" && isSelected}`}>Hợp tác</Link>
+                <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && isSelected}`}>Về chúng tôi</Link>
+                <Link to={"/about-test"} className={`${menuItem} ${pathname.includes("/about-test") && isSelected}`}>Bài kiểm tra</Link>
+                <Link to={"#"} className={`${menuItem}`}>Dịch vụ</Link>
+                <Link to={"/about-partners"} className={`${menuItem} ${pathname.includes("/about-partners") && isSelected}`}>Đối tác</Link>
+                <Link to={"#"} className={`${menuItem}`}>Hỗ trợ</Link>
+                <Link to={"/be-partner"} className={`${menuItem} ${pathname.includes("/be-partner") && isSelected}`}>Hợp tác</Link>
             </div>
             <div className="flex gap-x-[8px]">
                 <Button asChild variant="link" className="text-white">

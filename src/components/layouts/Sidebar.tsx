@@ -13,15 +13,15 @@ function Sidebar() {
                 <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
                 OVERMATE
             </div>
-            <Link to={"/dashboard"} className={`${menuItem} ${pathname == "/dashboard" && isSelected}`}>
+            <Link to={"/dashboard"} className={`${menuItem} ${pathname.includes("/dashboard") && isSelected}`}>
                 <Stats fill="white" height={20} width={20} />
                 Thống kê
             </Link>
-            <Link to={"/dashboard/users"} className={`${menuItem} ${pathname == "/dashboard/users" && isSelected}`}>
+            <Link to={"/dashboard/users"} className={`${menuItem} ${pathname.includes("/dashboard/users") && isSelected}`}>
                 <Users fill="white" height={20} width={20} />
                 Thành viên
             </Link >
-            <Link to={"/dashboard/services"} className={`${menuItem} ${pathname == "/dashboard/services" && isSelected}`}>
+            <Link to={"/dashboard/services"} className={`${menuItem} ${pathname.includes("/dashboard/services") && isSelected}`}>
                 <Services fill="white" height={20} width={20} />
                 Dịch vụ
             </Link>

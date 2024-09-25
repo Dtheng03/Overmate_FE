@@ -28,7 +28,7 @@ const schema = yup
 const input: string = "w-[400px] h-[48px] mb-2";
 const error: string = "text-sm text-red-400";
 
-function SignUpPartnersPage() {
+function SignUpPartner() {
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
     const {
@@ -111,4 +111,4 @@ function SignUpPartnersPage() {
     );
 }
 
-export default SignUpPartnersPage;
+export default SignUpPartner;

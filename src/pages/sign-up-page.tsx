@@ -61,13 +61,13 @@ function SignUpPage() {
     const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
 
     return (
-        <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
+        <section className="min-h-[calc(100vh-58px)] py-8 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex items-center justify-center gap-x-2 text-color2 font-bold">
                     <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
                     OVERMATE
                 </div>
-                <div className="my-12 flex gap-x-4">
+                <div className="my-8 flex gap-x-4">
                     <MyButton
                         classname={social}
                         title="Google"
