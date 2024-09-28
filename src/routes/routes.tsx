@@ -14,19 +14,27 @@ import AboutPartnersPage from "@/pages/home-page/about-partners-page";
 // be partner page
 import BePartner from "@/pages/be-partner-page/be-partner";
 import SignUpPartner from "@/pages/be-partner-page/sign-up-partner";
-import ChooseService from "@/pages/be-partner-page/choose-service";
-import SignUpService from "@/pages/be-partner-page/sign-up-service";
+import SignUpService from "@/pages/partner/sign-up-service";
 
 import SignInPage from "@/pages/sign-in-page";
 import SignUpPage from "@/pages/sign-up-page";
 import ProfilePage from "@/pages/profile-page";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import DashboardStats from "@/pages/dashboard-stats";
+import AuthGuard from "./authGuard";
+import Welcome from "@/pages/partner/welcome";
+import PartnerLayout from "@/layouts/partner-layout";
+import CheckRole from "./checkRole";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <MainLayout />,
+        element:
+            <AuthGuard>
+                <CheckRole>
+                    <MainLayout />
+                </CheckRole>
+            </AuthGuard>,
         children: [
             {
                 index: true,
@@ -47,8 +55,30 @@ const router = createBrowserRouter([
         ],
     },
     {
+        path: "/partner",
+        element:
+            <AuthGuard>
+                <CheckRole>
+                    <PartnerLayout />
+                </CheckRole>
+            </AuthGuard>,
+        children: [
+            {
+                index: true,
+                element: <Welcome />
+            },
+            {
+                path: "sign-up-service",
+                element: <SignUpService />
+            }
+        ],
+    },
+    {
         path: "/be-partner",
-        element: <MainLayout />,
+        element:
+            <AuthGuard>
+                <MainLayout />
+            </AuthGuard>,
         children: [
             {
                 index: true,
@@ -58,19 +88,14 @@ const router = createBrowserRouter([
                 path: "sign-up",
                 element: <SignUpPartner />
             },
-            {
-                path: "choose-service",
-                element: <ChooseService />
-            },
-            {
-                path: "sign-up-service",
-                element: <SignUpService />
-            }
         ],
     },
     {
         path: "/profile",
-        element: <MainLayout />,
+        element:
+            <AuthGuard>
+                <MainLayout />
+            </AuthGuard>,
         children: [
             {
                 index: true,
@@ -91,16 +116,20 @@ const router = createBrowserRouter([
     {
         path: "/sign-in",
         element:
-            <SignInOutLayout>
-                <SignInPage />
-            </SignInOutLayout>
+            <AuthGuard>
+                <SignInOutLayout>
+                    <SignInPage />
+                </SignInOutLayout>
+            </AuthGuard>
     },
     {
         path: "/sign-up",
         element:
-            <SignInOutLayout>
-                <SignUpPage />
-            </SignInOutLayout>
+            <AuthGuard>
+                <SignInOutLayout>
+                    <SignUpPage />
+                </SignInOutLayout>
+            </AuthGuard>
     },
     {
         path: "*",

@@ -5,11 +5,18 @@ const title: string = "mb-4 text-color4 text-xl font-bold text-center";
 const content: string = "text-white";
 
 function ProfilePage() {
+    const username = localStorage.getItem("username") || undefined;
+    const photoUrl = localStorage.getItem("photoUrl") || undefined;
+
     return (
         <section className="px-[10%] py-[5%] bg-color1">
-            <h1 className="text-white font-extrabold text-5xl text-center">Xin chào, Kiên</h1>
+            <h1 className="text-white font-extrabold text-5xl text-center">Xin chào, {username}</h1>
             <div className="mt-12 flex items-center justify-center gap-x-8">
-                <div className="w-[320px] h-[320px] bg-color4 rounded-[50%]"></div>
+                <img
+                    className="w-[280px] h-[280px] bg-color4 rounded-[50%]"
+                    src={photoUrl}
+                    alt={username}
+                />
                 <div className="w-[600px] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className="mb-4 text-white font-bold text-2xl text-center">Thông tin cá nhân</h3>

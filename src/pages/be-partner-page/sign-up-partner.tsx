@@ -4,41 +4,95 @@ import * as yup from "yup"
 import MyButton from "@/components/commons/MyButton"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
-
-interface FormValues {
-    email: string,
-    phone: string,
-    name: string,
-    password: string,
-    retypePassword: string,
-}
+import { FormRegisterValues, User } from "@/types/user"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { differenceInYears } from "date-fns"
+import { useMutation } from "@tanstack/react-query"
+import { useToast } from "@/hooks/use-toast"
+import axiosClient from "@/config"
+import { Button } from "@/components/ui/button"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 const schema = yup
     .object({
-        email: yup.string().required("Xin hãy nhập thông tin"),
-        phone: yup.string().required("Xin hãy nhập thông tin"),
-        name: yup.string().required("Xin hãy nhập thông tin"),
-        password: yup.string().required("Xin hãy nhập thông tin"),
-        retypePassword: yup.string().required("Xin hãy nhập thông tin"),
+        Email: yup.string().email("Xin hãy nhập đúng cú pháp email").required("Xin hãy nhập thông tin"),
+        Username: yup
+            .string()
+            .required("Xin hãy nhập thông tin")
+            .max(8, "Username không được quá 8 ký tự"), // Giới hạn độ dài username
+        Password: yup
+            .string()
+            .required("Xin hãy nhập thông tin")
+            .min(8, "Mật khẩu phải có ít nhất 8 ký tự")
+            .matches(/[A-Z]/, "Mật khẩu phải chứa ít nhất một chữ cái viết hoa")
+            .matches(/[a-z]/, "Mật khẩu phải chứa ít nhất một chữ cái thường")
+            .matches(/\d/, "Mật khẩu phải chứa ít nhất một chữ số"),
+        Dob: yup
+            .string()
+            .required("Xin hãy nhập thông tin")
+            .test("is-18", "Bạn phải đủ 18 tuổi", function (value) {
+                return differenceInYears(new Date(), new Date(value)) >= 18;
+            }), // Kiểm tra tuổi phải đủ 18
+        Gender: yup.string().required("Xin hãy nhập thông tin"),
+        Location: yup.string().required("Xin hãy nhập thông tin"),
     })
     .required()
 
 const input: string = "w-[400px] h-[48px] mb-2";
+const inputSm: string = "h-[48px] mb-2 ";
 const error: string = "text-sm text-red-400";
 
 function SignUpPartner() {
+    const navigate = useNavigate();
+    const { toast } = useToast();
+
+    const registerPartner = useMutation({
+        mutationFn: (body: User) => { return axiosClient.post("/auth/register", body) },
+        onSuccess: () => {
+            toast({
+                title: "Đăng ký thành công!",
+                description: "Vui lòng đăng nhập để tiếp tục.",
+            })
+            navigate("/sign-in")
+        },
+        onError: () => {
+            toast({
+                variant: "destructive",
+                title: "Đăng ký thất bại!",
+                description: "Xin vui lòng thử lại.",
+            })
+        },
+    });
+
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
     const {
+        setValue,
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormValues>({
+    } = useForm<FormRegisterValues>({
+        defaultValues: {
+            Dob: "2003-01-01",
+        },
         resolver: yupResolver(schema),
     })
-    const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
+
+    const onSubmit: SubmitHandler<FormRegisterValues> = (data) => {
+        const body: User = {
+            ...data,
+            IsServiceOwner: true
+        }
+        registerPartner.mutate(body)
+    }
 
     return (
         <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center">
@@ -48,49 +102,73 @@ function SignUpPartner() {
                     OVERMATE
                 </div>
                 <h2 className="my-4 text-xl font-semibold text-center">
-                    Đăng kí tài khoản đối tác
+                    Đăng ký tài khoản đối tác
                 </h2>
                 <div className="mb-4">
                     <Input
-                        {...register("email")}
+                        {...register("Email")}
                         className={input}
-                        placeholder="Nhập email"
+                        placeholder="Email"
                     />
-                    <p className={error}>{errors.email?.message}</p>
+                    <p className={error}>{errors.Email?.message}</p>
                 </div>
                 <div className="mb-4">
                     <Input
-                        {...register("phone")}
+                        {...register("Username")}
                         className={input}
-                        placeholder="Nhập số điện thoại"
+                        placeholder="Tên người dùng"
                     />
-                    <p className={error}>{errors.phone?.message}</p>
+                    <p className={error}>{errors.Username?.message}</p>
                 </div>
                 <div className="mb-4">
                     <Input
-                        {...register("name")}
-                        className={input}
-                        placeholder="Tên doanh nghiệp "
-                    />
-                    <p className={error}>{errors.name?.message}</p>
-                </div>
-                <div className="mb-4">
-                    <Input
-                        {...register("password")}
+                        {...register("Password")}
                         className={input}
                         type="password"
-                        placeholder="Nhập mật khẩu"
+                        placeholder="Mật khẩu"
                     />
-                    <p className={error}>{errors.password?.message}</p>
+                    <p className={error}>{errors.Password?.message}</p>
                 </div>
                 <div className="mb-4">
-                    <Input
-                        {...register("retypePassword")}
-                        className={input}
-                        type="password"
-                        placeholder="Nhập lại mật khẩu"
-                    />
-                    <p className={error}>{errors.retypePassword?.message}</p>
+                    <Select onValueChange={(value) => setValue('Location', value)}>
+                        <SelectTrigger
+                            className={inputSm}
+                            {...register("Location")}
+                        >
+                            <SelectValue placeholder="Tỉnh/Thành phố" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Hà Nội">Hà Nội</SelectItem>
+                            <SelectItem value="Hồ Chí Minh">Hồ Chí Minh</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <p className={error}>{errors.Location?.message}</p>
+                </div>
+                <div className="mb-4 flex gap-x-2">
+                    <div className="basis-1/2">
+                        <Input
+                            {...register("Dob")}
+                            className={inputSm}
+                            type="date"
+                        />
+                        <p className={error}>{errors.Dob?.message}</p>
+                    </div>
+                    <div className="basis-1/2"  >
+                        <Select onValueChange={(value) => setValue('Gender', value)}>
+                            <SelectTrigger
+                                className={inputSm}
+                                {...register("Gender")}
+                            >
+                                <SelectValue placeholder="Giới tính" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="female">Nữ</SelectItem>
+                                <SelectItem value="male">Nam</SelectItem>
+                                <SelectItem value="other">Khác</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <p className={error}>{errors.Gender?.message}</p>
+                    </div>
                 </div>
                 <p className="w-[400px] flex items-center space-x-2 mb-4">
                     <Checkbox id="terms" onCheckedChange={() => { setIsChecked(!isChecked) }} />
@@ -101,7 +179,13 @@ function SignUpPartner() {
                         Bằng cách đăng ký, bạn xác nhận rằng bạn đồng ý với việc <span className="text-color2">Overmate</span> lưu trữ và xử lý dữ liệu doanh nghiệp của bạn như được mô tả trong Chính sách <span className="text-color2">quyền riêng tư</span> của chúng tôi.
                     </label>
                 </p>
-                <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />
+                {registerPartner.isPending ?
+                    <Button disabled className={`w-full mb-8`}>
+                        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                        Vui lòng chờ
+                    </Button>
+                    :
+                    <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />}
                 <p className="flex gap-x-4 justify-center items-center text-sm">
                     Bạn đã có tài khoản?
                     <Link className="text-red-400" to={"/sign-in"}>Đăng nhập ngay</Link>

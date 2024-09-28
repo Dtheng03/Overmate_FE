@@ -1,29 +1,24 @@
 import { UserIcon } from "../icons/commons";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
 const menuItem: string = "px-[12px] py-[4px] text-sm";
 const isSelected: string = "border-[1px] border-color4 rounded-[20px]";
 
-function Header() {
+function PartnerHeader() {
     const navigate = useNavigate();
-    const pathname = useLocation().pathname;
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username") || "";
 
     return (
         <header className="fixed z-[9999] px-[5%] w-full h-[58px] flex items-center justify-between bg-color1 text-white shadow-md shadow-color1">
-            <Link to={"/"} className="text-color2 font-bold flex items-center gap-x-[4px]">
+            <Link to={"/partner"} className="text-color2 font-bold flex items-center gap-x-[4px]">
                 <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
                 OVERMATE
             </Link>
             <div className="flex gap-x-[16px]">
-                <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && isSelected}`}>Về chúng tôi</Link>
-                <Link to={"/about-test"} className={`${menuItem} ${pathname.includes("/about-test") && isSelected}`}>Bài kiểm tra</Link>
-                <Link to={"#"} className={`${menuItem}`}>Dịch vụ</Link>
-                <Link to={"/about-partners"} className={`${menuItem} ${pathname.includes("/about-partners") && isSelected}`}>Đối tác</Link>
-                {!token && <Link to={"/be-partner"} className={`${menuItem} ${pathname.includes("/be-partner") && isSelected}`}>Hợp tác</Link>}
+                <Link to={"#"} className={`${menuItem}`}>Dịch vụ của tôi</Link>
             </div>
             {token ?
                 <Popover>
@@ -56,4 +51,4 @@ function Header() {
     )
 }
 
-export default Header;
+export default PartnerHeader;

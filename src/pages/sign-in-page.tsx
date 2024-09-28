@@ -1,20 +1,28 @@
 import * as yup from "yup"
+import axiosClient from "@/config"
 import { Link } from "react-router-dom"
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input"
+import { FormLoginValues } from "@/types/user"
+import { Button } from "@/components/ui/button"
+import { ReloadIcon } from "@radix-ui/react-icons"
 import MyButton from "@/components/commons/MyButton"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { FacebookIcon, GoogleIcon } from "@/components/icons/brands"
+import { jwtDecode } from "jwt-decode"
 
-interface FormValues {
-    phoneOrEmail: string,
-    password: string
+interface JwtPayload {
+    // Các thuộc tính khác
+    [key: string]: any; // Để cho phép thuộc tính động
 }
 
 const schema = yup
     .object({
-        phoneOrEmail: yup.string().required("Xin hãy nhập thông tin"),
-        password: yup.string().required("Xin hãy nhập thông tin"),
+        Email: yup.string().required("Xin hãy nhập thông tin"),
+        Password: yup.string().required("Xin hãy nhập thông tin"),
     })
     .required()
 
@@ -22,15 +30,50 @@ const social: string = "basis-1/2 w-full bg-color1 text-white shadow shadow-colo
 const input: string = "w-[400px] h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2 ";
 const error: string = "text-sm text-red-400";
 
-function SignInPage() {
+export default function SignInPage() {
+    const navigate = useNavigate();
+    const { toast } = useToast()
+
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormValues>({
+    } = useForm<FormLoginValues>({
         resolver: yupResolver(schema),
     })
-    const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
+
+    const loginUser = useMutation({
+        mutationFn: (body: FormLoginValues) => { return axiosClient.post('/auth/login', body) },
+        onSuccess: (data: any) => {
+            toast({
+                title: "Đăng nhập thành công!",
+                description: "Chào mừng đến với OVERMATE.",
+            })
+            const decoded: JwtPayload = jwtDecode(data?.data?.value?.accessToken);
+            localStorage.setItem("token", data?.data?.value?.accessToken);
+            localStorage.setItem("username", data?.data?.value?.username);
+            localStorage.setItem("photoUrl", data?.data?.value?.photoUrl);
+            localStorage.setItem("userId", decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+            localStorage.setItem("role", decoded["role"]);
+
+            if (decoded["role"]?.[1] == "ServiceOwner") {
+                navigate("/partner");
+            } else {
+                navigate("/");
+            }
+        },
+        onError: () => {
+            toast({
+                variant: "destructive",
+                title: "Đăng nhập thất bại!",
+                description: "Xin vui lòng thử lại.",
+            })
+        },
+    });
+
+    const onSubmit: SubmitHandler<FormLoginValues> = (data) => {
+        loginUser.mutate(data)
+    }
 
     return (
         <section className="h-[calc(100vh-58px)] py-8 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
@@ -55,29 +98,36 @@ function SignInPage() {
                 </div>
                 <div className="mb-4">
                     <Input
-                        {...register("phoneOrEmail")}
+                        {...register("Email")}
                         className={input}
-                        placeholder="Nhập số điện thoại/ email"
+                        placeholder="Nhập email"
                     />
-                    <p className={error}>{errors.phoneOrEmail?.message}</p>
+                    <p className={error}>{errors.Email?.message}</p>
                 </div>
                 <div className="mb-4">
                     <Input
-                        {...register("password")}
+                        {...register("Password")}
                         className={input}
                         type="password"
                         placeholder="Nhập mật khẩu"
                     />
-                    <p className={error}>{errors.password?.message}</p>
+                    <p className={error}>{errors.Password?.message}</p>
                 </div>
                 <p className="text-right mb-2 text-white">
                     <Link className="text-sm" to={"/forgot-password"}>Quên mật khẩu?</Link>
                 </p>
-                <MyButton
-                    classname={`${social} mb-8`}
-                    title="Đăng nhập"
-                    type="submit"
-                />
+                {loginUser.isPending
+                    ?
+                    <Button disabled className={`${social} mb-8`}>
+                        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                        Vui lòng chờ
+                    </Button>
+                    :
+                    <MyButton
+                        classname={`${social} mb-8`}
+                        title="Đăng nhập"
+                        type="submit"
+                    />}
                 <p className="flex gap-x-4 justify-center items-center text-sm text-white">
                     Bạn chưa có tài khoản?
                     <Link className="text-red-400" to={"/sign-up"}>Đăng ký ngay</Link>
@@ -86,5 +136,3 @@ function SignInPage() {
         </section >
     );
 }
-
-export default SignInPage;
