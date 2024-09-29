@@ -7,6 +7,12 @@ function CheckRole({ children }: { children: React.ReactElement }) {
     if (role?.includes("ServiceOwner") && !pathname.includes('/partner')) {
         return <Navigate to="/partner" replace={true} />
     } else if (!role?.includes("ServiceOwner") && pathname.includes('/partner')) {
+        localStorage.clear();
+        return <Navigate to="/" replace={true} />
+    } else if (role?.includes("Admin") && !pathname.includes('/admin')) {
+        return <Navigate to="/admin" replace={true} />
+    } else if (!role?.includes("Admin") && pathname.includes('/admin')) {
+        localStorage.clear();
         return <Navigate to="/" replace={true} />
     } else {
         return children

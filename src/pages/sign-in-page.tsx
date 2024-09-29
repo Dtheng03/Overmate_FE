@@ -58,6 +58,8 @@ export default function SignInPage() {
 
             if (decoded["role"]?.[1] == "ServiceOwner") {
                 navigate("/partner");
+            } else if (decoded["role"] == "Admin") {
+                navigate("/admin");
             } else {
                 navigate("/");
             }

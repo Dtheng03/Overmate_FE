@@ -6,8 +6,8 @@ function AboutTestPage() {
     return (
         <section className="px-[10%] py-[5%] bg-color1">
             <h1 className="mb-16 text-center text-white text-3xl font-extrabold">BÀI KIỂM TRA</h1>
-            <div className="flex justify-evenly">
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+            <div className="block lg:flex justify-evenly">
+                <div className="my-4 lg:m-0 basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>THẦN SỐ HỌC</h3>
                         <p className={content}>
@@ -15,7 +15,7 @@ function AboutTestPage() {
                         </p>
                     </div>
                 </div>
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <div className="my-4 lg:m-0 basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>CUNG HOÀNG ĐẠO</h3>
                         <p className={content}>
@@ -23,8 +23,7 @@ function AboutTestPage() {
                         </p>
                     </div>
                 </div>
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
-
+                <div className="my-4 lg:m-0 basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>MBTI</h3>
                         <p className={content}>

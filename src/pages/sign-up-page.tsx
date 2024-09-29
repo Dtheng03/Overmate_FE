@@ -151,7 +151,6 @@ function SignUpPage() {
                             <SelectValue placeholder="Tỉnh/Thành phố" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="Hà Nội">Hà Nội</SelectItem>
                             <SelectItem value="Hồ Chí Minh">Hồ Chí Minh</SelectItem>
                         </SelectContent>
                     </Select>
