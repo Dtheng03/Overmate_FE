@@ -30,9 +30,6 @@ function PartnerHeader() {
                     </PopoverTrigger>
                     <PopoverContent className="z-[9999] w-[160px] p-0">
                         <Button className="w-full justify-start" variant="ghost" onClick={() => {
-                            navigate("/profile")
-                        }}>Hồ sơ</Button>
-                        <Button className="w-full justify-start" variant="ghost" onClick={() => {
                             localStorage.clear()
                             navigate("/sign-in")
                         }}>Đăng xuất</Button>
