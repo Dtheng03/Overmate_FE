@@ -2,15 +2,14 @@ import { CheckIcon } from "@/components/icons/commons";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const div: string = "mb-4 flex items-center gap-x-4"
+const div: string = "mb-4 flex items-center gap-x-4";
 const text: string = "text-xs";
 
 export default function Welcome() {
-
     return (
-        <section className="h-[calc(100vh-58px)] px-[10%] py-[5%] flex justify-center items-center gap-x-12">
-            <div className="p-[4%] rounded-[20px] bg-color1 text-white shadow-lg">
-                <h3 className="mb-8 font-bold">Đăng ký dịch vụ ngay</h3>
+        <section className="h-[calc(100vh-58px)] px-[5%] py-[5%] flex flex-col lg:flex-row justify-center items-center gap-y-12 lg:gap-x-12">
+            <div className="p-[6%] rounded-[20px] bg-color1 text-white shadow-lg w-full lg:max-w-[40%]">
+                <h3 className="mb-8 font-bold text-lg lg:text-xl">Đăng ký dịch vụ ngay</h3>
                 <div className={div}>
                     <CheckIcon fill="green" height={24} width={24} />
                     <p className={text}>
@@ -35,16 +34,16 @@ export default function Welcome() {
                     </Button>
                 </div>
             </div>
-            <div className="">
-                <h1 className="mb-12 text-color1 text-4xl font-bold">
-                    Cùng <span className="text-color4">Overmate</span> để <br />phát triển kinh doanh!
+            <div className="text-center lg:text-left">
+                <h1 className="mb-6 lg:mb-12 text-color1 text-3xl lg:text-4xl font-bold">
+                    Cùng <span className="text-color4">Overmate</span> để <br className="hidden lg:block" /> phát triển kinh doanh!
                 </h1>
-                <p className="text-xl">
+                <p className="text-lg lg:text-xl">
                     Trở thành đối tác của chúng tôi để tiếp cận
-                    <br />nhiều khách hàng hơn, tăng doanh thu và
-                    <br />quản lý dịch vụ một cách dễ dàng
+                    <br className="hidden lg:block" /> nhiều khách hàng hơn, tăng doanh thu và
+                    <br className="hidden lg:block" /> quản lý dịch vụ một cách dễ dàng.
                 </p>
             </div>
         </section>
-    )
+    );
 }

@@ -1,25 +1,19 @@
-import { SubmitHandler, useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import MyButton from "@/components/commons/MyButton"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { FormRegisterValues, User } from "@/types/user"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { differenceInYears } from "date-fns"
-import { useMutation } from "@tanstack/react-query"
-import { useToast } from "@/hooks/use-toast"
 import axiosClient from "@/config"
+import { differenceInYears } from "date-fns"
+import { useToast } from "@/hooks/use-toast"
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { Checkbox } from "@/components/ui/checkbox"
+import { useMutation } from "@tanstack/react-query"
+import MyButton from "@/components/commons/MyButton"
+import { Link, useNavigate } from "react-router-dom"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { FormRegisterValues, User } from "@/types/user"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 const schema = yup
     .object({
@@ -46,8 +40,6 @@ const schema = yup
     })
     .required()
 
-const input: string = "w-[400px] h-[48px] mb-2";
-const inputSm: string = "h-[48px] mb-2 ";
 const error: string = "text-sm text-red-400";
 
 function SignUpPartner() {
@@ -95,19 +87,19 @@ function SignUpPartner() {
     }
 
     return (
-        <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex items-center justify-center gap-x-[4px] text-color2 font-bold">
+        <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center px-4 sm:px-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[500px]">
+                <div className="flex items-center justify-center gap-x-[4px] text-color2 font-bold mb-4">
                     <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
                     OVERMATE
                 </div>
-                <h2 className="my-4 text-xl font-semibold text-center">
+                <h2 className="text-xl font-semibold text-center mb-4">
                     Đăng ký tài khoản đối tác
                 </h2>
                 <div className="mb-4">
                     <Input
                         {...register("Email")}
-                        className={input}
+                        className="w-full h-[48px] mb-2"
                         placeholder="Email"
                     />
                     <p className={error}>{errors.Email?.message}</p>
@@ -115,7 +107,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Input
                         {...register("Username")}
-                        className={input}
+                        className="w-full h-[48px] mb-2"
                         placeholder="Tên người dùng"
                     />
                     <p className={error}>{errors.Username?.message}</p>
@@ -123,7 +115,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Input
                         {...register("Password")}
-                        className={input}
+                        className="w-full h-[48px] mb-2"
                         type="password"
                         placeholder="Mật khẩu"
                     />
@@ -132,7 +124,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Select onValueChange={(value) => setValue('Location', value)}>
                         <SelectTrigger
-                            className={inputSm}
+                            className="w-full h-[48px] mb-2"
                             {...register("Location")}
                         >
                             <SelectValue placeholder="Tỉnh/Thành phố" />
@@ -143,19 +135,19 @@ function SignUpPartner() {
                     </Select>
                     <p className={error}>{errors.Location?.message}</p>
                 </div>
-                <div className="mb-4 flex gap-x-2">
-                    <div className="basis-1/2">
+                <div className="mb-4 flex flex-col sm:flex-row gap-x-2">
+                    <div className="flex-1">
                         <Input
                             {...register("Dob")}
-                            className={inputSm}
+                            className="w-full h-[48px] mb-2"
                             type="date"
                         />
                         <p className={error}>{errors.Dob?.message}</p>
                     </div>
-                    <div className="basis-1/2"  >
+                    <div className="flex-1">
                         <Select onValueChange={(value) => setValue('Gender', value)}>
                             <SelectTrigger
-                                className={inputSm}
+                                className="w-full h-[48px] mb-2"
                                 {...register("Gender")}
                             >
                                 <SelectValue placeholder="Giới tính" />
@@ -169,28 +161,31 @@ function SignUpPartner() {
                         <p className={error}>{errors.Gender?.message}</p>
                     </div>
                 </div>
-                <p className="w-[400px] flex items-center space-x-2 mb-4">
+                <p className="w-full flex items-center space-x-2 mb-4">
                     <Checkbox id="terms" onCheckedChange={() => { setIsChecked(!isChecked) }} />
                     <label
                         htmlFor="terms"
-                        className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-xs font-medium leading-none"
                     >
                         Bằng cách đăng ký, bạn xác nhận rằng bạn đồng ý với việc <span className="text-color2">Overmate</span> lưu trữ và xử lý dữ liệu doanh nghiệp của bạn như được mô tả trong Chính sách <span className="text-color2">quyền riêng tư</span> của chúng tôi.
                     </label>
                 </p>
-                {registerPartner.isPending ?
-                    <Button disabled className={`w-full mb-8`}>
+                {registerPartner.isPending ? (
+                    <Button disabled className="w-full mb-8">
                         <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                         Vui lòng chờ
                     </Button>
-                    :
-                    <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />}
-                <p className="flex gap-x-4 justify-center items-center text-sm">
-                    Bạn đã có tài khoản?
-                    <Link className="text-red-400" to={"/sign-in"}>Đăng nhập ngay</Link>
+                ) : (
+                    <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />
+                )}
+                <p className="text-center text-sm">
+                    Bạn đã có tài khoản?{" "}
+                    <Link className="text-red-400" to="/sign-in">
+                        Đăng nhập ngay
+                    </Link>
                 </p>
             </form>
-        </section >
+        </section>
     );
 }
 

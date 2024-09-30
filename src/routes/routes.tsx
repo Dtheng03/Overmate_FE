@@ -15,9 +15,10 @@ import DashboardLayout from "@/layouts/dashboard-layout";
 import HomePage from "../pages/home-page/home-page";
 import AboutUsPage from "@/pages/home-page/about-us-page";
 import AboutTestPage from "@/pages/home-page/about-test-page";
-import ServicePage from "@/pages/home-page/service-page";
 import MbtiTest from "@/pages/home-page/mbti-test";
 import ProfilePage from "@/pages/profile-page";
+import ServicePage from "@/pages/home-page/service-page";
+import ServiceDetails from "@/pages/home-page/service-details";
 
 // be partner page
 import BePartner from "@/pages/be-partner-page/be-partner";
@@ -59,16 +60,20 @@ const router = createBrowserRouter([
                 element: <AboutTestPage />
             },
             {
-                path: "/service/:categoryId",
-                element: <ServicePage />
-            },
-            {
                 path: "/profile",
                 element: <ProfilePage />
             },
             {
                 path: "/mbti-test",
                 element: <MbtiTest />
+            },
+            {
+                path: "/service/:categoryId",
+                element: <ServicePage />
+            },
+            {
+                path: "/service/details/:serviceId",
+                element: <ServiceDetails />
             },
         ],
     },

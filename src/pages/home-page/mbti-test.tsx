@@ -44,13 +44,8 @@ function MbtiTest() {
 
     const currentQuestion = mergedItems[currentIndex]?.prompt;
 
-    // Tách chuỗi dựa trên ký tự \n
     const parts = currentQuestion?.split('\n');
-
-    // Câu hỏi là phần đầu tiên
     const question = parts?.[0];
-
-    // Câu trả lời là các phần sau
     const answers = parts?.slice(1)?.map((answer: string) => answer.trim());
 
     const handleAnswerSelect = (e: any, answer: string) => {
@@ -62,7 +57,7 @@ function MbtiTest() {
         setFinalAns([...finalAns, selectedValue]);
         if (currentIndex + 1 < mergedItems.length) {
             setCurrentIndex(currentIndex + 1);
-            setSelectedAnswer("")
+            setSelectedAnswer("");
         } else {
             setIsFinished(true);
         }
@@ -73,20 +68,20 @@ function MbtiTest() {
         if (allowed !== "approved") {
             window.history.back();
         }
-    }, [])
+    }, []);
 
     return (
-        <section className="h-[calc(100vh-58px)] px-[10%] py-[5%] bg-slate-100 flex flex-col items-center justify-evenly">
-            <h1 className="text-color1 font-extrabold text-4xl text-center">TRẮC NGHIỆM MBTI</h1>
+        <section className="min-h-[calc(100vh-58px)] px-4 py-8 bg-slate-100 flex flex-col items-center justify-evenly">
+            <h1 className="text-color1 font-extrabold text-3xl sm:text-4xl text-center">TRẮC NGHIỆM MBTI</h1>
             {!isFinished ? (
-                <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
+                <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md mt-6">
                     <h2 className="text-xl font-bold mb-4">Câu {currentIndex + 1}/{mergedItems.length}</h2>
                     <h2 className="text-lg font-bold mb-4">{question}</h2>
                     <div className="mb-4">
                         {answers?.map((ans: any, index: number) => (
                             <label
                                 key={index}
-                                className={`block p-2 mb-2 border rounded-lg cursor-pointer ${selectedAnswer === ans ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
+                                className={`block p-2 mb-2 border rounded-lg cursor-pointer transition-all duration-300 ${selectedAnswer === ans ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
                             >
                                 <input
                                     type="radio"
@@ -100,9 +95,9 @@ function MbtiTest() {
                             </label>
                         ))}
                     </div>
-                    <div className="mt-8 flex justify-end">
+                    <div className="mt-6 flex justify-end">
                         <button
-                            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300"
                             onClick={handleNextQuestion}
                             disabled={selectedAnswer === ""}
                         >
@@ -111,17 +106,16 @@ function MbtiTest() {
                     </div>
                 </div>
             ) : (
-                <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md text-center">
-                    <h2 className="text-2xl font-bold mb-4">Hoàn thành bài kiểm tra.</h2>
+                <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md mt-6 text-center">
+                    <h2 className="text-2xl font-bold mb-4">Hoàn thành bài kiểm tra</h2>
                     <p className="text-lg mb-4">Chúc mừng bạn đã hoàn thành bài kiểm tra MBTI.</p>
                     <p className="text-lg mb-4">Hãy bấm nút xem kết quả bên dưới nhé.</p>
                     <button
-                        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300"
                         onClick={() => {
-                            console.log(finalAns);
                             submitTest.mutate({
                                 "answers": finalAns
-                            })
+                            });
                         }}
                     >
                         Xem kết quả

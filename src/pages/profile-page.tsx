@@ -19,19 +19,19 @@ function ProfilePage() {
 
     return (
         <section className="px-[10%] py-[5%] bg-color1">
-            <h1 className="text-white font-extrabold text-4xl text-center">Xin chào, {username}</h1>
-            <div className="mt-12 flex items-center justify-center gap-x-8">
+            <h1 className="text-white font-extrabold text-3xl sm:text-4xl text-center">Xin chào, {username}</h1>
+            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-8">
                 <img
-                    className="w-[200px] h-[200px] bg-color4 rounded-[50%]"
+                    className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] bg-color4 rounded-full"
                     src={photoUrl}
                     alt={username}
                     onError={(e) => {
                         e.currentTarget.src = "https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg";
                     }}
                 />
-                <div className="w-[600px] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <div className="w-full max-w-[600px] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
-                        <h3 className="mb-4 text-white font-bold text-2xl text-center">Thông tin cá nhân</h3>
+                        <h3 className="mb-4 text-white font-bold text-xl sm:text-2xl text-center">Thông tin cá nhân</h3>
                         <p className="text-white mt-2 font-bold">Tên người dùng:
                             <span className="ml-4 font-normal">{username}</span>
                         </p>
@@ -44,8 +44,8 @@ function ProfilePage() {
                     </div>
                 </div>
             </div>
-            <div className="mt-12 flex justify-evenly">
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+            <div className="mt-12 flex flex-col lg:flex-row justify-evenly gap-8">
+                <div className="basis-full lg:basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>THẦN SỐ HỌC</h3>
                         <div className={content}>
@@ -59,7 +59,7 @@ function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <div className="basis-full lg:basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>CUNG HOÀNG ĐẠO</h3>
                         <div className={content}>
@@ -73,7 +73,7 @@ function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <div className="basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
+                <div className="basis-full lg:basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
                         <h3 className={title}>MBTI</h3>
                         <div className={content}>
