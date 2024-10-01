@@ -8,6 +8,7 @@ export interface FormRegisterValues {
     Username: string,
     Password: string,
     Dob: string,
+    PhoneNumber: string,
     Location: string,
     Gender: string,
 }

@@ -44,6 +44,12 @@ const schema = yup
             }),
         Gender: yup.string().required("Xin hãy nhập thông tin"),
         Location: yup.string().required("Xin hãy nhập thông tin"),
+        PhoneNumber: yup
+            .string()
+            .required("Xin hãy nhập thông tin")
+            .matches(/^[0-9]+$/, "Số điện thoại chỉ được chứa số") // Chỉ cho phép số
+            .min(10, "Số điện thoại phải có ít nhất 10 chữ số")
+            .max(11, "Số điện thoại không được quá 11 chữ số"), // Giới hạn độ dài
     })
     .required()
 
@@ -102,6 +108,14 @@ function SignUpPage() {
                     <p className={error}>{errors.Password?.message}</p>
                 </div>
                 <div className="mb-4">
+                    <Input
+                        {...register("PhoneNumber")}
+                        className={input}
+                        placeholder="Số điện thoại"
+                    />
+                    <p className={error}>{errors.PhoneNumber?.message}</p>
+                </div>
+                <div className="mb-4">
                     <Select onValueChange={(value) => setValue('Location', value)}>
                         <SelectTrigger className={input}>
                             <SelectValue placeholder="Tỉnh/Thành phố" />
@@ -112,12 +126,12 @@ function SignUpPage() {
                     </Select>
                     <p className={error}>{errors.Location?.message}</p>
                 </div>
-                <div className="mb-4 flex gap-2">
-                    <div className="basis-1/2">
+                <div className="mb-4 flex flex-col sm:flex-row gap-x-2">
+                    <div className="flex-1">
                         <Input {...register("Dob")} className={input} type="date" />
                         <p className={error}>{errors.Dob?.message}</p>
                     </div>
-                    <div className="basis-1/2">
+                    <div className="flex-1">
                         <Select onValueChange={(value) => setValue('Gender', value)}>
                             <SelectTrigger className={input}>
                                 <SelectValue placeholder="Giới tính" />

@@ -37,8 +37,14 @@ const schema = yup
             }), // Kiểm tra tuổi phải đủ 18
         Gender: yup.string().required("Xin hãy nhập thông tin"),
         Location: yup.string().required("Xin hãy nhập thông tin"),
+        PhoneNumber: yup
+            .string()
+            .required("Xin hãy nhập thông tin")
+            .matches(/^[0-9]+$/, "Số điện thoại chỉ được chứa số") // Chỉ cho phép số
+            .min(10, "Số điện thoại phải có ít nhất 10 chữ số")
+            .max(11, "Số điện thoại không được quá 11 chữ số"), // Giới hạn độ dài
     })
-    .required()
+    .required();
 
 const error: string = "text-sm text-red-400";
 
@@ -120,6 +126,14 @@ function SignUpPartner() {
                         placeholder="Mật khẩu"
                     />
                     <p className={error}>{errors.Password?.message}</p>
+                </div>
+                <div className="mb-4">
+                    <Input
+                        {...register("PhoneNumber")}
+                        className="w-full h-[48px] mb-2"
+                        placeholder="Số điện thoại"
+                    />
+                    <p className={error}>{errors.PhoneNumber?.message}</p>
                 </div>
                 <div className="mb-4">
                     <Select onValueChange={(value) => setValue('Location', value)}>
