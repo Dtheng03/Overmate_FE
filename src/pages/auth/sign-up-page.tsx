@@ -85,13 +85,12 @@ function SignUpPage() {
     }
 
     return (
-        <section className="min-h-[calc(100vh-58px)] py-8 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[480px] md:max-w-[640px] p-4 md:p-8 rounded-md">
-                <div className="flex items-center justify-center gap-x-2 text-color2 font-bold">
-                    <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
-                    OVERMATE
+        <section className="min-h-[calc(100vh-58px)] py-8 px-4 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
+            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mt-[-40px]">
+                <div className="flex items-center justify-center">
+                    <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
                 </div>
-                <div className="my-8 flex flex-col md:flex-row gap-4">
+                <div className="mb-8 mt-[-20px] flex flex-col md:flex-row gap-4">
                     <MyButton classname={social} title="Google" icon={<GoogleIcon fill="white" height={20} width={20} />} type="button" />
                     <MyButton classname={social} title="Facebook" icon={<FacebookIcon fill="white" height={20} width={20} />} type="button" />
                 </div>

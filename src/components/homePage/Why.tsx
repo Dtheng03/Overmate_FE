@@ -3,7 +3,7 @@ const title: string = "mt-4 text-white text-center";
 function Why() {
     return (
         <section className="px-[10%] py-[5%]">
-            <div className="py-[5%] px-[5%] bg-color1 border-color2 border-2 shadow-md rounded-[20px]">
+            <div className="py-[5%] px-[5%] bg-color1 border-color2 border-2 shadow-md shadow-slate-600 rounded-[20px]">
                 <h2 className="mb-12 text-color4 font-bold text-base lg:text-xl text-center">TẠI SAO BẠN NÊN CHỌN OVERMATE?</h2>
                 <div className="py-[4%] flex justify-center lg:justify-between flex-wrap gap-x-4">
                     <div className="mb-8">

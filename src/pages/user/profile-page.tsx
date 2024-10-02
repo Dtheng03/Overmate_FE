@@ -99,7 +99,7 @@ function ProfilePage() {
     }
 
     return (
-        <section className="px-[10%] py-[5%] bg-color1" >
+        <section className="px-[10%] py-[5%] bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center" >
             <h1 className="text-white font-extrabold text-3xl sm:text-4xl text-center">Xin chào, {username}</h1>
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-8">
                 <img

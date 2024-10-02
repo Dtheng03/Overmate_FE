@@ -94,12 +94,11 @@ function SignUpPartner() {
 
     return (
         <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center px-4 sm:px-8">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[500px]">
-                <div className="flex items-center justify-center gap-x-[4px] text-color2 font-bold mb-4">
-                    <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
-                    OVERMATE
+            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mt-[-40px]">
+                <div className="flex items-center justify-center">
+                    <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
                 </div>
-                <h2 className="text-xl font-semibold text-center mb-4">
+                <h2 className="text-xl font-semibold text-center mb-4 mt-[-20px]">
                     Đăng ký tài khoản đối tác
                 </h2>
                 <div className="mb-4">

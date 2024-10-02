@@ -53,7 +53,7 @@ function MbtiTest() {
     };
 
     const handleNextPage = () => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         if (currentIndex + questionsPerPage < mergedItems.length) {
             setCurrentIndex(currentIndex + questionsPerPage);
         } else {
@@ -62,8 +62,9 @@ function MbtiTest() {
     };
 
     const handleSubmit = () => {
+        // Submit full array of answers, including unanswered (-1) values
         submitTest.mutate({
-            answers: answers.filter(answer => answer !== -1), // Only include answered questions
+            answers: answers, // Send all answers, including -1 for unanswered questions
         });
     };
 

@@ -80,13 +80,12 @@ export default function SignInPage() {
     };
 
     return (
-        <section className="h-[calc(100vh-58px)] py-8 px-4 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
-            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full">
-                <div className="flex items-center justify-center gap-x-2 text-color2 font-bold">
-                    <img className="h-[40px] w-[50px]" src="/About1.png" alt="Logo" />
-                    OVERMATE
+        <section className="min-h-[calc(100vh-58px)] py-8 px-4 flex justify-center bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
+            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mt-[-40px]">
+                <div className="flex items-center justify-center">
+                    <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
                 </div>
-                <div className="my-8 flex flex-col gap-4 md:flex-row">
+                <div className="mb-8 mt-[-20px] flex flex-col gap-4 md:flex-row">
                     <MyButton
                         classname={social}
                         title="Google"

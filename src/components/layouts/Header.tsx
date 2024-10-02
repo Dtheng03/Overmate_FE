@@ -24,10 +24,9 @@ function Header() {
     });
 
     return (
-        <header className="fixed z-[999] px-[5%] w-full h-[58px] flex items-center justify-between bg-color1 text-white shadow-md shadow-color1">
+        <header className="fixed z-[999] px-[5%] w-full h-[58px] flex items-center justify-between bg-color1 text-white">
             <Link to={"/"} className="text-color2 font-bold flex items-center gap-x-[4px]" onClick={() => { setMobileMenuOpen(false) }}>
-                <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
-                OVERMATE
+                <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
             </Link>
 
             {/* menu mobile */}
@@ -43,27 +42,30 @@ function Header() {
             </div>
 
             <div className="hidden lg:flex gap-x-[16px]">
-                <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && "font-bold"}`}>Về chúng tôi</Link>
+                <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && isSelected}`}>Về chúng tôi</Link>
                 <Link to={"/about-test"} className={`${menuItem} ${pathname.includes("/about-test") && isSelected}`}>Bài kiểm tra</Link>
                 <HoverCard openDelay={0}>
                     <HoverCardTrigger>
                         <span className={`${menuItem} cursor-pointer ${pathname.includes("/service") && isSelected}`}>Dịch vụ</span>
                     </HoverCardTrigger>
                     {(data?.data?.value?.items?.length > 0) ?
-                        <HoverCardContent className="z-[9999] w-[160px] p-0">
-                            {data?.data?.value?.items?.map((item: any, index: number) => (
-                                <Button
-                                    key={index}
-                                    className="w-full justify-start"
-                                    variant="ghost"
-                                    onClick={() => {
-                                        navigate(`/service/${item.serviceCateId}`)
-                                    }}
-                                >
-                                    {item.categoryName}
-                                </Button>
-                            ))}
+                        <HoverCardContent className="z-[9999] w-[160px] text-white p-0.5 bg-gradient-to-b from-[#1c1e4e] to-[#55A6CE] border-0 rounded-none">
+                            <div className="bg-color1 p-[4%]">
+                                {data?.data?.value?.items?.map((item: any, index: number) => (
+                                    <Button
+                                        key={index}
+                                        className="w-full justify-start rounded-none hover:bg-color4"
+                                        variant="ghost"
+                                        onClick={() => {
+                                            navigate(`/service/${item.serviceCateId}`)
+                                        }}
+                                    >
+                                        {item.categoryName}
+                                    </Button>
+                                ))}
+                            </div>
                         </HoverCardContent>
+
                         :
                         <HoverCardContent className="z-[9999] p-4">
                             <p className="text-red-800">Hiện chưa có dịch vụ khả dụng</p>
@@ -76,7 +78,7 @@ function Header() {
                 <div className="hidden lg:block">
                     <HoverCard openDelay={0}>
                         <HoverCardTrigger>
-                            <div className={`p-2 flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
+                            <div className={`px-2 py-[4px] flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
                                 <p className="text-sm">Xin chào, {username}</p>
                                 <UserIcon fill="white" height={16} width={16} />
                             </div>
@@ -93,11 +95,11 @@ function Header() {
                     </HoverCard>
                 </div>
                 :
-                <div className="hidden lg:flex gap-x-[8px]">
+                <div className="hidden lg:flex items-center gap-x-[8px]">
                     <Button asChild variant="link" className="text-white">
                         <Link to="/sign-in">Đăng nhập</Link>
                     </Button>
-                    <Button asChild variant="outline">
+                    <Button asChild variant="outline" className="rounded-[20px] bg-transparent text-white border-color4 hover:bg-color4 h-[30px]">
                         <Link to="/sign-up" className="text-color1">Đăng ký</Link>
                     </Button>
                 </div>}

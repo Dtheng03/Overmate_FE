@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] bg-color3";
+const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center";
 const h1 = "mb-10 text-center text-white text-2xl md:text-3xl font-extrabold";
 const border = "my-4 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE] max-w-[1000px] mx-auto";
 const card = "flex flex-col md:flex-row gap-y-6 md:gap-x-12 items-center bg-color1 p-6 rounded-[20px] max-w-[1000px] mx-auto"; // Limit card width
