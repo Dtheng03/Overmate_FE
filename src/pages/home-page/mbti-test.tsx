@@ -7,10 +7,12 @@ function MbtiTest() {
     const navigate = useNavigate();
 
     const submitTest = useMutation({
-        mutationFn: (body: { answers: number[] }) => { return axiosClient.post('/questions/submit', body) },
+        mutationFn: (body: { answers: number[] }) => {
+            return axiosClient.post('/questions/submit', body);
+        },
         onSuccess: () => {
             sessionStorage.removeItem("mbtiTest");
-            navigate("/profile")
+            navigate("/profile");
         },
         onError: (e) => {
             console.log(e);
@@ -37,30 +39,32 @@ function MbtiTest() {
     const mergedItems = [...items1, ...items2, ...items3];
 
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState("");
-    const [selectedValue, setSelectedValue] = useState(0);
-    const [finalAns, setFinalAns] = useState<number[]>([]);
+    const [answers, setAnswers] = useState<number[]>(Array(mergedItems.length).fill(-1));
     const [isFinished, setIsFinished] = useState(false);
 
-    const currentQuestion = mergedItems[currentIndex]?.prompt;
+    // Slice 10 questions at a time
+    const questionsPerPage = 10;
+    const currentQuestions = mergedItems.slice(currentIndex, currentIndex + questionsPerPage);
 
-    const parts = currentQuestion?.split('\n');
-    const question = parts?.[0];
-    const answers = parts?.slice(1)?.map((answer: string) => answer.trim());
-
-    const handleAnswerSelect = (e: any, answer: string) => {
-        setSelectedAnswer(answer);
-        setSelectedValue(+e.target.value);
+    const handleAnswerSelect = (e: any, index: number) => {
+        const newAnswers = [...answers];
+        newAnswers[currentIndex + index] = +e.target.value;
+        setAnswers(newAnswers);
     };
 
-    const handleNextQuestion = () => {
-        setFinalAns([...finalAns, selectedValue]);
-        if (currentIndex + 1 < mergedItems.length) {
-            setCurrentIndex(currentIndex + 1);
-            setSelectedAnswer("");
+    const handleNextPage = () => {
+        window.scrollTo(0, 0)
+        if (currentIndex + questionsPerPage < mergedItems.length) {
+            setCurrentIndex(currentIndex + questionsPerPage);
         } else {
             setIsFinished(true);
         }
+    };
+
+    const handleSubmit = () => {
+        submitTest.mutate({
+            answers: answers.filter(answer => answer !== -1), // Only include answered questions
+        });
     };
 
     useEffect(() => {
@@ -74,32 +78,40 @@ function MbtiTest() {
         <section className="min-h-[calc(100vh-58px)] px-4 py-8 bg-slate-100 flex flex-col items-center justify-evenly">
             <h1 className="text-color1 font-extrabold text-3xl sm:text-4xl text-center">TRẮC NGHIỆM MBTI</h1>
             {!isFinished ? (
-                <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md mt-6">
-                    <h2 className="text-xl font-bold mb-4">Câu {currentIndex + 1}/{mergedItems.length}</h2>
-                    <h2 className="text-lg font-bold mb-4">{question}</h2>
-                    <div className="mb-4">
-                        {answers?.map((ans: any, index: number) => (
-                            <label
-                                key={index}
-                                className={`block p-2 mb-2 border rounded-lg cursor-pointer transition-all duration-300 ${selectedAnswer === ans ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
-                            >
-                                <input
-                                    type="radio"
-                                    name="answer"
-                                    value={index}
-                                    className="mr-2"
-                                    onChange={(e) => handleAnswerSelect(e, ans)}
-                                    checked={selectedAnswer === ans}
-                                />
-                                {ans}
-                            </label>
-                        ))}
-                    </div>
+                <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md mt-6">
+                    <h2 className="text-xl font-bold mb-4">Câu hỏi {currentIndex + 1} - {Math.min(currentIndex + questionsPerPage, mergedItems.length)} / {mergedItems.length}</h2>
+                    {currentQuestions.map((questionItem, questionIndex) => {
+                        const parts = questionItem?.prompt?.split('\n');
+                        const question = parts?.[0];
+                        const answerOptions = parts?.slice(1)?.map((answer: string) => answer.trim());
+
+                        return (
+                            <div key={questionIndex} className="mb-6">
+                                <h3 className="text-lg font-bold mb-2">{question}</h3>
+                                {answerOptions?.map((ans: any, index: number) => (
+                                    <label
+                                        key={index}
+                                        className={`block p-2 mb-2 border rounded-lg cursor-pointer transition-all duration-300 ${answers[currentIndex + questionIndex] === index ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={`answer-${questionIndex}`}
+                                            value={index}
+                                            className="mr-2"
+                                            onChange={(e) => handleAnswerSelect(e, questionIndex)}
+                                            checked={answers[currentIndex + questionIndex] === index}
+                                        />
+                                        {ans}
+                                    </label>
+                                ))}
+                            </div>
+                        );
+                    })}
                     <div className="mt-6 flex justify-end">
                         <button
                             className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300"
-                            onClick={handleNextQuestion}
-                            disabled={selectedAnswer === ""}
+                            onClick={handleNextPage}
+                            disabled={answers.slice(currentIndex, currentIndex + questionsPerPage).includes(-1)}
                         >
                             Tiếp theo
                         </button>
@@ -112,11 +124,7 @@ function MbtiTest() {
                     <p className="text-lg mb-4">Hãy bấm nút xem kết quả bên dưới nhé.</p>
                     <button
                         className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300"
-                        onClick={() => {
-                            submitTest.mutate({
-                                "answers": finalAns
-                            });
-                        }}
+                        onClick={handleSubmit}
                     >
                         Xem kết quả
                     </button>
