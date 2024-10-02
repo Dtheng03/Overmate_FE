@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MenuIcon, UserIcon } from "../icons/commons";
 import { HoverCard, HoverCardContent, HoverCardTrigger, } from "@/components/ui/hover-card"
 
@@ -10,6 +10,7 @@ const isSelected: string = "border-[1px] border-color4 rounded-[20px]";
 
 function PartnerHeader() {
     const navigate = useNavigate();
+    const pathname = useLocation().pathname;
     const username = localStorage.getItem("username") || "";
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -33,7 +34,7 @@ function PartnerHeader() {
             </div>
 
             <div className="hidden lg:flex gap-x-[16px]">
-                <Link to={"#"} className={`${menuItem}`}>Dịch vụ của tôi</Link>
+                <Link to={"/partner/my-services"} className={`${menuItem} ${pathname.includes("/my-services") && isSelected}`}>Dịch vụ của tôi</Link>
             </div>
             <div className="hidden lg:block">
                 <HoverCard openDelay={0}>
@@ -53,7 +54,7 @@ function PartnerHeader() {
             </div>
             <div className={`lg:hidden ${mobileMenuOpen ? "flex" : "hidden"} absolute top-[58px] right-0 w-[300px] flex-col shadow-lg bg-white text-color1`}>
                 <p className={`${menuItemMobile} text-sm`}>Xin chào, {username}</p>
-                <Link to={"#"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Dịch vụ của tôi</Link>
+                <Link to={"/partner/my-services"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Dịch vụ của tôi</Link>
                 <Link to="/sign-in" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen); localStorage.clear(); }} >Đăng xuất</Link>
             </div>
         </header>

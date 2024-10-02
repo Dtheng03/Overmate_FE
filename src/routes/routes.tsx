@@ -16,7 +16,7 @@ import HomePage from "../pages/home-page/home-page";
 import AboutUsPage from "@/pages/home-page/about-us-page";
 import AboutTestPage from "@/pages/home-page/about-test-page";
 import MbtiTest from "@/pages/home-page/mbti-test";
-import ProfilePage from "@/pages/profile-page";
+import ProfilePage from "@/pages/user/profile-page";
 import ServicePage from "@/pages/home-page/service-page";
 import ServiceDetails from "@/pages/home-page/service-details";
 
@@ -27,6 +27,7 @@ import SignUpPartner from "@/pages/be-partner-page/sign-up-partner";
 // partner page
 import Welcome from "@/pages/partner/welcome";
 import SignUpService from "@/pages/partner/sign-up-service";
+import MyServices from "@/pages/partner/my-services";
 
 // admin page
 import WelcomeAdmin from "@/pages/admin/welcome-admin";
@@ -34,8 +35,9 @@ import DashboardStats from "@/pages/admin/dashboard-stats";
 import DashboardUsers from "@/pages/admin/dashboard-users";
 import DashboardServices from "@/pages/admin/dashboard-services";
 
-import SignInPage from "@/pages/sign-in-page";
-import SignUpPage from "@/pages/sign-up-page";
+// auth page
+import SignInPage from "@/pages/auth/sign-in-page";
+import SignUpPage from "@/pages/auth/sign-up-page";
 
 const router = createBrowserRouter([
     {
@@ -93,6 +95,10 @@ const router = createBrowserRouter([
             {
                 path: "sign-up-service",
                 element: <SignUpService />
+            },
+            {
+                path: "my-services",
+                element: <MyServices />
             }
         ],
     },

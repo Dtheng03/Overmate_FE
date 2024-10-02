@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosClient from "@/config";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
     Table,
     TableBody,
@@ -21,7 +21,6 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -29,9 +28,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Eye } from "@/components/icons/dashboard";
-import { toast } from "@/hooks/use-toast";
 
-function DashboardServices() {
+function MyServices() {
     const [pageNumber, setPageNumber] = useState(1); // Quản lý số trang hiện tại
     const [searchTerm, setSearchTerm] = useState(""); // Quản lý giá trị tìm kiếm
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(""); // Quản lý giá trị tìm kiếm sau debounce
@@ -50,36 +48,14 @@ function DashboardServices() {
         };
     }, [searchTerm]); // Run this effect whenever `searchTerm` changes
 
-    const { data, isFetching, refetch } = useQuery({
-        queryKey: ['admin-services', pageNumber, debouncedSearchTerm, statusFilter],
+    const { data, isFetching } = useQuery({
+        queryKey: ['partner-services', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
-                `/service?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Status=${statusFilter}&Oderby=${""}`
+                `/service/service_owner?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&FilterStatus=${statusFilter}&Oderby=${""}`
             ),
-        staleTime: 3000,
+        staleTime: 3000, // Đặt thời gian stale (tạm thời giữ dữ liệu trong 3 giây)
     });
-
-    const updateStatus = useMutation({
-        mutationFn: (body: {
-            Id: string,
-            Status: number
-        }) => axiosClient.put("/service/update_status", body),
-        onSuccess: () => {
-            toast({
-                title: "Thao tác thành công!",
-                description: "Hãy tải lại nếu chưa thấy sự thay đổi",
-            });
-            refetch();
-        },
-        onError: () => {
-            toast({
-                variant: "destructive",
-                title: "Thao tác thất bại!",
-                description: "Xin vui lòng thử lại.",
-            });
-        },
-    });
-
 
     // Điều khiển khi nhấn "Previous" và "Next"
     const handleNextPage = () => {
@@ -111,7 +87,6 @@ function DashboardServices() {
                     <h1 className="text-center text-color4 text-lg font-bold">DỊCH VỤ</h1>
                 </div>
             </div>
-
             <div className="my-4 flex justify-between items-center">
                 {/* Search Input */}
                 <input
@@ -221,32 +196,6 @@ function DashboardServices() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {(item?.status == 1) &&
-                                                            <DialogFooter className="flex justify-end pt-4">
-                                                                <span
-                                                                    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 cursor-pointer transition-colors"
-                                                                    onClick={() => {
-                                                                        updateStatus.mutate({
-                                                                            "Id": item?.id,
-                                                                            "Status": 3
-                                                                        })
-                                                                    }}
-                                                                >
-                                                                    Từ chối
-                                                                </span>
-                                                                <span
-                                                                    className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 cursor-pointer transition-colors"
-                                                                    onClick={() => {
-                                                                        updateStatus.mutate({
-                                                                            "Id": item?.id,
-                                                                            "Status": 2
-                                                                        })
-                                                                    }}
-                                                                >
-                                                                    Chấp nhận
-                                                                </span>
-                                                            </DialogFooter>
-                                                        }
                                                     </DialogContent>
                                                 </Dialog>
                                             </TableCell>
@@ -294,4 +243,4 @@ function DashboardServices() {
     );
 }
 
-export default DashboardServices;
+export default MyServices;

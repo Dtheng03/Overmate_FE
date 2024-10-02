@@ -129,7 +129,7 @@ function SignUpService() {
                                 <SelectValue placeholder="Loại dịch vụ" />
                             </SelectTrigger>
                             <SelectContent>
-                                {data?.data?.value?.map((category: any) => (
+                                {data?.data?.value?.items?.map((category: any) => (
                                     <SelectItem key={category.serviceCateId} value={category.serviceCateId}>
                                         {category.categoryName}
                                     </SelectItem>
