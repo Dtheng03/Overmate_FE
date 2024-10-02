@@ -8,7 +8,6 @@ const h1 = "mb-8 md:mb-12 text-center text-white text-2xl md:text-3xl font-extra
 const border = "my-4 w-full max-w-[800px] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]";
 const card = "flex flex-col md:flex-row gap-6 md:gap-12 items-center bg-color1 p-6 rounded-[20px]";
 const img = "h-[150px] w-[150px] md:h-[200px] md:w-[200px] object-cover bg-color4 rounded-[20px]";
-const name = "my-4 text-color4 text-lg md:text-xl font-bold text-center md:text-left";
 const text = "text-white mb-4";
 const boldText = "text-white font-bold";
 const normalText = "ml-4 font-normal";
@@ -18,7 +17,7 @@ function ServiceDetails() {
     const params = useParams();
     const { data } = useQuery({
         queryKey: ['user-service-details'],
-        queryFn: () => axiosClient.get(`/service?ServiceId=${params.serviceId}`),
+        queryFn: () => axiosClient.get(`/service/${params.serviceId}`),
     });
 
     return (
@@ -27,9 +26,12 @@ function ServiceDetails() {
             <div className={border}>
                 <div className="bg-color1 p-[4%] rounded-[20px]">
                     <div className={card}>
-                        <img className={img} src={data?.data?.value?.photos?.[0]?.imageUrl} alt={data?.data?.value?.name} />
+                        <img className={img} src={data?.data?.value?.photos?.imageUrl} alt={data?.data?.value?.name} />
                         <div className="flex-1">
-                            <h2 className={name}>{data?.data?.value?.name}</h2>
+                            <h2 className="text-xl md:text-2xl font-semibold text-color4 mb-2">
+                                {data?.data?.value?.name} - <span className="text-xl">{data?.data?.value?.serviceCategoryName}</span>
+                            </h2>
+                            <p className="text-white font-bold mb-4">Đơn vị thực hiện: <span className="font-normal">{data?.data?.value?.serviceOwnerName}</span></p>
                             <p className={text}>{data?.data?.value?.description}</p>
                             <p className={boldText}>Thời lượng của dịch vụ:
                                 <span className={normalText}>{data?.data?.value?.duration} giờ</span>

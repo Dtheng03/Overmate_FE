@@ -158,7 +158,6 @@ function SignUpService() {
                         <Input
                             className={input}
                             type="file"
-                            multiple
                             accept="image/*"
                             onChange={(e: any) => { setImg(e.target.files) }}
                         />

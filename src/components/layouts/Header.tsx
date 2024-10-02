@@ -49,9 +49,9 @@ function Header() {
                     <HoverCardTrigger>
                         <span className={`${menuItem} cursor-pointer ${pathname.includes("/service") && isSelected}`}>Dịch vụ</span>
                     </HoverCardTrigger>
-                    {(data?.data?.value?.length > 0) ?
+                    {(data?.data?.value?.items?.length > 0) ?
                         <HoverCardContent className="z-[9999] w-[160px] p-0">
-                            {data?.data?.value?.map((item: any, index: number) => (
+                            {data?.data?.value?.items?.map((item: any, index: number) => (
                                 <Button
                                     key={index}
                                     className="w-full justify-start"
@@ -107,7 +107,7 @@ function Header() {
                 <Link to={"/about-test"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Bài kiểm tra</Link>
                 <span className={`${menuItemMobile} cursor-pointer`} onClick={() => { setServiceOpen(!serviceOpen) }}>Dịch vụ</span>
                 <div className={`${serviceOpen ? "block" : "hidden"}`}>
-                    {data?.data?.value?.map((item: any, index: number) => (
+                    {data?.data?.value?.items?.map((item: any, index: number) => (
                         <Button
                             key={index}
                             className="w-full justify-start pl-[60px]"
