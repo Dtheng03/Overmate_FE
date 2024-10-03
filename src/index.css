@@ -20,6 +20,10 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* Scrollbar CSS */
 html *::-webkit-scrollbar {
     border-radius: 0;

@@ -1,25 +1,47 @@
+import { useEffect, useState } from "react";
 import axiosClient from "@/config";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { LocationIcon, StarIcon } from "@/components/icons/commons";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center";
-const h1 = "mb-10 text-center text-white text-2xl md:text-3xl font-extrabold";
-const border = "my-4 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE] max-w-[1000px] mx-auto";
-const card = "flex flex-col md:flex-row gap-y-6 md:gap-x-12 items-center bg-color1 p-6 rounded-[20px] max-w-[1000px] mx-auto"; // Limit card width
-const img = "h-[150px] w-[150px] md:h-[200px] md:w-[200px] object-cover bg-color4 rounded-[20px] shadow-md";
-const buttonContainer = "flex justify-center md:justify-end w-full mt-4";
-const button = "bg-color2 hover:bg-color3 py-2 px-6 rounded-lg text-white font-semibold";
+const h1 = "mb-10 text-center text-white text-2xl md:text-3xl font-extrabold uppercase";
+const border = "my-4 p-0.5 rounded-[20px] bg-gradient-to-bl from-[#011949] to-[#55A6CE] w-full sm:w-auto";
+const card = "bg-color1 p-4 rounded-[20px] w-full sm:w-auto";
+const img = "w-full sm:w-[240px] h-[240px] object-cover bg-color4 rounded-[20px] shadow-md";
 
 function ServicePage() {
     const params = useParams();
+    const navigate = useNavigate();
+    const state = useLocation().state;
+    const [pageNumber, setPageNumber] = useState(1);
+    const pageSize = 9;
 
     const { data, refetch, isFetching, status } = useQuery({
         queryKey: ['user-view-service'],
-        queryFn: () => axiosClient.get(`/service/service_category?ServiceCateId=${params.categoryId}`),
+        queryFn: () => axiosClient.get(`/service/service_category?PageSize=${pageSize}&PageNumber=${pageNumber}&ServiceCateId=${params.categoryId}`),
         retry: 0
     });
+
+    // pagination handle
+    const handleNextPage = () => {
+        if (pageNumber < data?.data?.value?.totalPages) {
+            setPageNumber((prev) => prev + 1);
+        }
+    };
+    const handlePreviousPage = () => {
+        if (pageNumber > 1) {
+            setPageNumber((prev) => prev - 1);
+        }
+    };
 
     useEffect(() => {
         refetch()
@@ -27,54 +49,93 @@ function ServicePage() {
 
     return (
         <section className={section}>
-            <h1 className={h1}>Danh sách dịch vụ</h1>
+            <h1 className={h1}>Dịch vụ {state?.categoryName}</h1>
             {isFetching ? (
-                <div className={border}>
-                    <div className="bg-color1 p-[2%] rounded-[20px]">
-                        <h1 className="text-center text-color4 text-xl font-bold">
-                            Đang tải dữ liệu ...
-                        </h1>
+                <div className="flex justify-center">
+                    <div className={`${border} w-full sm:w-2/3 lg:w-1/2 xl:w-1/3`}>
+                        <div className="bg-color1 p-4 sm:p-[2%] rounded-[20px]">
+                            <h1 className="text-center text-color4 text-lg sm:text-xl font-bold">
+                                Đang tải dữ liệu ...
+                            </h1>
+                        </div>
                     </div>
                 </div>
             ) : (
                 <>
                     {status === "success" ? (
-                        data?.data?.value?.items?.map((item: any, index: number) => (
-                            <div key={index} className={border}>
-                                <div className={card}>
-                                    <img className={img} src={item?.photos?.imageUrl} alt={item.name} />
-                                    <div className="flex-1">
-                                        <h2 className="text-xl md:text-2xl font-semibold text-color4 mb-2">
-                                            {item?.name} - <span className="text-xl">{item?.serviceCategoryName}</span>
-                                        </h2>
-                                        <p className="text-white font-bold mb-4">Đơn vị thực hiện: <span className="font-normal">{item?.serviceOwnerName}</span></p>
-                                        <p className="font-bold text-white mb-4">Thời lượng:
-                                            <span className="ml-2 font-normal text-color2">{item?.duration} giờ</span>
-                                        </p>
-                                        <p className="font-bold text-white mt-2 md:mt-0">Giá:
-                                            <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} VND</span>
-                                        </p>
-                                        <div className={buttonContainer}>
-                                            <Button asChild className={button}>
-                                                <Link to={`/service/details/${item.id}`}>Xem thêm</Link>
-                                            </Button>
+                        <div className="w-full lg:w-[896px] mx-auto flex flex-wrap gap-4 md:gap-x-[34px] justify-center">
+                            {data?.data?.value?.items?.map((item: any, index: number) => (
+                                <div key={index} className={`${border} cursor-pointer transition-all hover:scale-[1.02]`} onClick={() => { navigate(`/service/details/${item.id}`) }}>
+                                    <div className={`${card}`}>
+                                        <img className={img} src={item?.photos?.imageUrl} alt={item.name} />
+                                        <div className="w-full sm:w-[240px]">
+                                            <p className="text-white font-extrabold uppercase mt-[8px] mb-[4px]">
+                                                {item?.name}
+                                            </p>
+                                            <p className="mb-[8px] font-semibold text-color5">
+                                                {item?.price?.toLocaleString()} đ
+                                            </p>
+                                            <div className="flex justify-between items-center">
+                                                <p className="flex items-center text-xs text-slate-400 italic">
+                                                    <LocationIcon fill="white" width={12} height={12} /> Tp. Hồ Chí Minh
+                                                </p>
+                                                <div className="flex items-center text-color5 text-xs">
+                                                    5.0 |
+                                                    <div className="ml-1 flex items-center">
+                                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))}
+                            {/* pagination */}
+                            <Pagination className="my-8">
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious
+                                            onClick={pageNumber > 1 ? handlePreviousPage : (e) => e.preventDefault()}
+                                            className={`bg-color2 cursor-pointer ${pageNumber === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        />
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationLink className="bg-white">
+                                            {pageNumber} / {data?.data?.value?.totalPages}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationLink className="w-fit px-2 bg-white">
+                                            Tổng: {data?.data?.value?.totalItems}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationNext
+                                            onClick={pageNumber < data?.data?.value?.totalPages ? handleNextPage : (e) => e.preventDefault()}
+                                            className={`bg-color2 cursor-pointer ${pageNumber === data?.data?.value?.totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </div>
                     ) : (
-                        <div className={border}>
-                            <div className="bg-color1 p-[2%] rounded-[20px]">
-                                <h1 className="text-center text-color4 text-xl font-bold">
-                                    Hiện chưa có dịch vụ khả dụng.
-                                </h1>
+                        <div className="flex justify-center">
+                            <div className={`${border} w-full sm:w-2/3 lg:w-1/2 xl:w-1/3`}>
+                                <div className="bg-color1 p-4 sm:p-[2%] rounded-[20px]">
+                                    <h1 className="text-center text-color4 text-lg sm:text-xl font-bold">
+                                        Hiện chưa có dịch vụ khả dụng.
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     )}
                 </>
             )}
-        </section>
+        </section >
     );
 }
 

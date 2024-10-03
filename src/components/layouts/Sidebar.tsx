@@ -10,11 +10,10 @@ function Sidebar() {
     return (
         <div className="w-[240px] min-h-screen bg-color1 flex flex-col gap-4">
             <div>
-                <div className="pl-4 py-4 text-color2 font-bold flex items-center gap-x-[4px]">
-                    <img className="h-[40px] w-[52px]" src="/About1.png" alt="Logo" />
-                    OVERMATE
+                <div className="mt-[-20px]">
+                    <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
                 </div>
-                <Link to={"/admin/dashboard"} className={`${menuItem} ${pathname.includes("/dashboard") && isSelected}`}>
+                <Link to={"/admin/dashboard"} className={`${menuItem} ${pathname.includes("/dashboard") && isSelected} mt-[-20px]`}>
                     <Stats fill="white" height={20} width={20} />
                     Thống kê
                 </Link>

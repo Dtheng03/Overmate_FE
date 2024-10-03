@@ -1,10 +1,15 @@
-import { JwtPayload } from "@/types/jwt";
+import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { JwtPayload } from "@/types/jwt";
 import { Navigate, useLocation } from "react-router-dom";
 
 function AuthGuard({ children }: { children: React.ReactElement }) {
     const token = localStorage.getItem("token") || "";
     const pathname = useLocation().pathname;
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
     // neu co token thi kiem tra ko thi thoi
     if (token) {

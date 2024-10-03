@@ -25,7 +25,7 @@ function Header() {
 
     return (
         <header className="fixed z-[999] px-[5%] w-full h-[58px] flex items-center justify-between bg-color1 text-white">
-            <Link to={"/"} className="text-color2 font-bold flex items-center gap-x-[4px]" onClick={() => { setMobileMenuOpen(false) }}>
+            <Link to={"/"} className="" onClick={() => { setMobileMenuOpen(false) }}>
                 <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
             </Link>
 
@@ -57,7 +57,7 @@ function Header() {
                                         className="w-full justify-start rounded-none hover:bg-color4"
                                         variant="ghost"
                                         onClick={() => {
-                                            navigate(`/service/${item.serviceCateId}`)
+                                            navigate(`/service/${item.serviceCateId}`, { state: { categoryName: item?.categoryName } })
                                         }}
                                     >
                                         {item.categoryName}
@@ -67,42 +67,46 @@ function Header() {
                         </HoverCardContent>
 
                         :
-                        <HoverCardContent className="z-[9999] p-4">
-                            <p className="text-red-800">Hiện chưa có dịch vụ khả dụng</p>
+                        <HoverCardContent className="z-[9999] w-[200px] text-white p-0.5 bg-gradient-to-b from-[#1c1e4e] to-[#55A6CE] border-0 rounded-none">
+                            <div className="bg-color1 p-[4%]">
+                                <p className="text-white text-center">Hiện chưa có dịch vụ</p>
+                            </div>
                         </HoverCardContent>
                     }
                 </HoverCard>
                 {!token && <Link to={"/be-partner"} className={`${menuItem} ${pathname.includes("/be-partner") && isSelected}`}>Hợp tác</Link>}
-            </div>
-            {token ?
-                <div className="hidden lg:block">
-                    <HoverCard openDelay={0}>
-                        <HoverCardTrigger>
-                            <div className={`px-2 py-[4px] flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
-                                <p className="text-sm">Xin chào, {username}</p>
-                                <UserIcon fill="white" height={16} width={16} />
-                            </div>
-                        </HoverCardTrigger>
-                        <HoverCardContent className="z-[9999] w-[160px] p-0">
-                            <Button className="w-full justify-start" variant="ghost" onClick={() => {
-                                navigate("/profile")
-                            }}>Hồ sơ</Button>
-                            <Button className="w-full justify-start" variant="ghost" onClick={() => {
-                                localStorage.clear()
-                                navigate("/sign-in")
-                            }}>Đăng xuất</Button>
-                        </HoverCardContent>
-                    </HoverCard>
-                </div>
-                :
-                <div className="hidden lg:flex items-center gap-x-[8px]">
-                    <Button asChild variant="link" className="text-white">
-                        <Link to="/sign-in">Đăng nhập</Link>
-                    </Button>
-                    <Button asChild variant="outline" className="rounded-[20px] bg-transparent text-white border-color4 hover:bg-color4 h-[30px]">
-                        <Link to="/sign-up" className="text-color1">Đăng ký</Link>
-                    </Button>
-                </div>}
+            </div >
+            {
+                token ?
+                    <div className="hidden lg:block">
+                        < HoverCard openDelay={0} >
+                            <HoverCardTrigger>
+                                <div className={`px-2 py-[4px] flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
+                                    <p className="text-sm">Xin chào, {username}</p>
+                                    <UserIcon fill="white" height={16} width={16} />
+                                </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="z-[9999] w-[160px] p-0">
+                                <Button className="w-full justify-start" variant="ghost" onClick={() => {
+                                    navigate("/profile")
+                                }}>Hồ sơ</Button>
+                                <Button className="w-full justify-start" variant="ghost" onClick={() => {
+                                    localStorage.clear()
+                                    navigate("/sign-in")
+                                }}>Đăng xuất</Button>
+                            </HoverCardContent>
+                        </HoverCard >
+                    </div >
+                    :
+                    <div className="hidden lg:flex items-center gap-x-[8px]">
+                        <Button asChild variant="link" className="text-white">
+                            <Link to="/sign-in">Đăng nhập</Link>
+                        </Button>
+                        <Button asChild variant="outline" className="rounded-[20px] bg-transparent text-white border-color4 hover:bg-color4 h-[30px]">
+                            <Link to="/sign-up" className="text-color1">Đăng ký</Link>
+                        </Button>
+                    </div>
+            }
             <div className={`lg:hidden ${mobileMenuOpen ? "flex" : "hidden"} absolute top-[58px] right-0 w-[300px] flex-col shadow-lg bg-white text-color1`}>
                 {token && <p className={`${menuItemMobile} text-sm`}>Xin chào, {username}</p>}
                 <Link to={"/about-us"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Về chúng tôi</Link>
@@ -136,7 +140,7 @@ function Header() {
                     <Link to="/sign-in" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen); localStorage.clear(); }} >Đăng xuất</Link>
                 }
             </div>
-        </header>
+        </header >
     )
 }
 

@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button";
 import axiosClient from "@/config";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { ClockIcon, LocationIcon, StarIcon } from "@/components/icons/commons";
 
-const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] bg-color3 flex flex-col items-center";
-const h1 = "mb-8 md:mb-12 text-center text-white text-2xl md:text-3xl font-extrabold";
-const border = "my-4 w-full max-w-[800px] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]";
-const card = "flex flex-col md:flex-row gap-6 md:gap-12 items-center bg-color1 p-6 rounded-[20px]";
-const img = "h-[150px] w-[150px] md:h-[200px] md:w-[200px] object-cover bg-color4 rounded-[20px]";
-const text = "text-white mb-4";
-const boldText = "text-white font-bold";
-const normalText = "ml-4 font-normal";
-const button = "mt-4 w-full bg-color2 hover:bg-color3 py-3 rounded-lg text-white font-semibold text-lg";
+const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] flex flex-col items-center bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center";
+const h1 = "mb-8 md:mb-12 text-center text-white text-2xl md:text-3xl font-extrabold uppercase";
+const border = "my-4 p-0.5 rounded-[20px] bg-gradient-to-b from-[#011949] to-[#55A6CE] shadow-md shadow-slate-600";
+const card = "flex flex-col md:flex-row gap-[36px] bg-color1 py-[20px] px-[36px] rounded-[20px]";
+const img = "w-[400px] h-[400px] object-cover bg-color4 rounded-[20px]";
+
+const border2 = "my-4 p-0.5 rounded-[20px] bg-gradient-to-bl from-[#011949] to-[#55A6CE] lg:w-fit";
+const card2 = "bg-color1 p-4 rounded-[20px] lg:w-fit flex gap-x-4 lg:block";
+const img2 = "w-[240px] h-[240px] object-cover bg-color4 rounded-[20px] shadow-md";
 
 function ServiceDetails() {
     const params = useParams();
@@ -22,31 +22,77 @@ function ServiceDetails() {
 
     return (
         <section className={section}>
-            <h1 className={h1}>Chi tiết dịch vụ</h1>
+            <h1 className={h1}>{data?.data?.value?.serviceCategoryName}</h1>
             <div className={border}>
-                <div className="bg-color1 p-[4%] rounded-[20px]">
-                    <div className={card}>
-                        <img className={img} src={data?.data?.value?.photos?.imageUrl} alt={data?.data?.value?.name} />
-                        <div className="flex-1">
-                            <h2 className="text-xl md:text-2xl font-semibold text-color4 mb-2">
-                                {data?.data?.value?.name} - <span className="text-xl">{data?.data?.value?.serviceCategoryName}</span>
-                            </h2>
-                            <p className="text-white font-bold mb-4">Đơn vị thực hiện: <span className="font-normal">{data?.data?.value?.serviceOwnerName}</span></p>
-                            <p className={text}>{data?.data?.value?.description}</p>
-                            <p className={boldText}>Thời lượng của dịch vụ:
-                                <span className={normalText}>{data?.data?.value?.duration} giờ</span>
-                            </p>
-                            <p className={boldText}>Giá của dịch vụ:
-                                <span className={normalText}>{data?.data?.value?.price?.toLocaleString()} VND</span>
-                            </p>
+                <div className={card}>
+                    <img className={img} src={data?.data?.value?.photos?.imageUrl} alt={data?.data?.value?.name} />
+                    <div className="w-full md:w-[400px] flex-1"> {/* Sử dụng w-full cho các màn hình nhỏ hơn */}
+                        <p className="text-2xl font-semibold text-white uppercase mb-[8px]">
+                            {data?.data?.value?.name}
+                        </p>
+                        <div className="flex items-center text-color5 text-xs mb-[16px]">
+                            5.0 |
+                            <div className="ml-1 flex items-center">
+                                <StarIcon fill="#E8B200" width={12} height={12} />
+                                <StarIcon fill="#E8B200" width={12} height={12} />
+                                <StarIcon fill="#E8B200" width={12} height={12} />
+                                <StarIcon fill="#E8B200" width={12} height={12} />
+                                <StarIcon fill="#E8B200" width={12} height={12} />
+                            </div>
                         </div>
+                        <p className="flex items-center gap-x-[8px] text-sm text-slate-200 mb-[16px]">
+                            <LocationIcon fill="white" width={20} height={20} /> Tp. Hồ Chí Minh
+                        </p>
+                        <p className="flex items-center gap-x-[8px] text-xs text-slate-400 italic">
+                            <ClockIcon fill="white" width={20} height={20} /> Cập nhật 35 phút trước
+                        </p>
+                        <div className="flex justify-end">
+                            <span className="inline-block my-4 p-0.5 rounded-[10px] bg-gradient-to-l from-[#011949] to-[#55A6CE] cursor-pointer transition-all hover:scale-[1.02]">
+                                <span className="inline-block bg-color1 rounded-[10px] px-[28px] py-[8px] text-white text-sm ">
+                                    Đặt ngay
+                                </span>
+                            </span>
+                        </div>
+                        <p className={"font-bold text-sm text-white"}>
+                            Mô tả chi tiết:
+                        </p>
+                        <p className="text-sm text-white text-justify">{data?.data?.value?.description}</p>
                     </div>
-                    <Button asChild className={button}>
-                        <Link to="#">Đặt dịch vụ</Link>
-                    </Button>
                 </div>
             </div>
-        </section>
+
+            <h2 className={`mt-[60px] mb-[20px] w-fit lg:w-[896px] mx-auto text-white text-2xl font-bold text-center lg:text-left`}>DỊCH VỤ TƯƠNG TỰ</h2>
+            <div className="w-fit lg:w-[896px] mx-auto flex flex-col lg:flex-row justify-between flex-wrap">
+                <div className={`${border2} cursor-pointer transition-all hover:scale-[1.02]`}>
+                    <div className={card2}>
+                        <img className={img2} src={data?.data?.value?.photos?.imageUrl} alt={data?.data?.value?.name} />
+                        <div className="w-[240px]">
+                            <p className="text-white font-extrabold uppercase mt-[8px] mb-[4px]">
+                                {data?.data?.value?.name}
+                            </p>
+                            <p className="mb-[8px] font-semibold text-color5">
+                                {data?.data?.value?.price?.toLocaleString()} đ
+                            </p>
+                            <div className="flex flex-col lg:flex-row justify-between gap-2 lg:items-center">
+                                <p className="flex items-center text-xs text-slate-400 italic">
+                                    <LocationIcon fill="white" width={12} height={12} /> Tp. Hồ Chí Minh
+                                </p>
+                                <div className="flex items-center text-color5 text-xs">
+                                    5.0 |
+                                    <div className="ml-1 flex items-center">
+                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                        <StarIcon fill="#E8B200" width={12} height={12} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section >
     );
 }
 
