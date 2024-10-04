@@ -1,36 +1,50 @@
-import { Stats, Up, Users } from "@/components/icons/dashboard";
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart"
+import { useMemo } from "react";
+import axiosClient from "@/config";
+import { Label, Pie, PieChart } from "recharts"
+import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
+import { Services, Stats, Up, Users } from "@/components/icons/dashboard";
 
 const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "#2563eb",
-    },
-    mobile: {
-        label: "Mobile",
-        color: "#60a5fa",
-    },
+    totalPrice: {
+        label: "Doanh thu"
+    }
 } satisfies ChartConfig
 
-const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-]
-
-
 function DashboardStats() {
+    // call data
+    const { data } = useQuery({
+        queryKey: ['admin-stats'],
+        queryFn: () => axiosClient.get("/dashboard"),
+    });
+
+    const chartData = [
+        { type: "Dọn dẹp nhà", number: data?.data?.value?.numberServicesOfMovation, fill: "#4BC8E7" },
+        { type: "Bảo trì thiết bị", number: data?.data?.value?.numberServicesOfRepairation, fill: "#1C1E4E" },
+    ]
+
+    const totalServices = useMemo(() => {
+        return chartData.reduce((acc, curr) => acc + curr.number, 0)
+    }, [])
+
     return (
         <section className="min-h-screen p-[4%] bg-color1">
             <div className="basis-[30%] p-0.5 rounded-lg bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                 <h2 className="py-2 rounded-lg bg-color1 text-color4 text-center text-xl font-bold">
-                    Hôm nay <span className="text-white font-normal">(01/11/2024)</span>
+                    Thông số
                 </h2>
             </div>
             <div className="mt-4 flex gap-x-4">
@@ -38,68 +52,140 @@ function DashboardStats() {
                     <h3 className="text-color1 text-lg font-bold text-center">Người dùng</h3>
                     <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
-                            200
+                            {data?.data?.value?.numberUsersUntilToday} người
                             <Up fill="white" height={16} width={16} />
                         </div>
                         <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
                             <Users fill="white" height={20} width={20} />
                         </div>
                     </div>
-                    <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">30%</span> so với hôm qua </p>
+                    <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">{data?.data?.value?.numberUsersUntilToday - data?.data?.value?.numberUsersPreviousDay}</span> so với hôm qua </p>
                 </div>
                 <div className="basis-1/4 p-[2%] bg-white rounded-lg">
                     <h3 className="text-color1 text-lg font-bold text-center">Doanh thu</h3>
                     <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
-                            1086
+                            {data?.data?.value?.revenuePerDay?.toLocaleString()} đ
                             <Up fill="white" height={16} width={16} />
                         </div>
                         <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
                             <Stats fill="white" height={20} width={20} />
                         </div>
                     </div>
-                    <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">49.9%</span> so với hôm qua </p>
                 </div>
-                <div className="basis-1/2 p-[2%] bg-white rounded-lg">
-                    <h3 className="text-color1 text-lg font-bold text-center">Doanh thu</h3>
-                    <div className="mt-2 flex gap-x-4 text-color1 font-bold">
-                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
-                            <h4 className="text-center">Gói kết nối</h4>
-                            <p className="text-center">5</p>
+                <div className="basis-1/4 p-[2%] bg-white rounded-lg">
+                    <h3 className="text-color1 text-lg font-bold text-center">Dọn dẹp nhà</h3>
+                    <div className="mt-2 flex justify-between text-color1">
+                        <div className="flex items-center gap-x-[4px] text-lg font-bold">
+                            {data?.data?.value?.numberServicesOfMovation} dịch vụ
+                            <Up fill="white" height={16} width={16} />
                         </div>
-                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
-                            <h4 className="text-center">Gói bạn bè </h4>
-                            <p className="text-center">3</p>
+                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
+                            <Services fill="white" height={20} width={20} />
                         </div>
-                        <div className="basis-1/3 p-1 bg-color2 rounded-lg">
-                            <h4 className="text-center">Gói tri kỉ</h4>
-                            <p className="text-center">1</p>
+                    </div>
+                </div>
+                <div className="basis-1/4 p-[2%] bg-white rounded-lg">
+                    <h3 className="text-color1 text-lg font-bold text-center">Bảo trì thiết bị</h3>
+                    <div className="mt-2 flex justify-between text-color1">
+                        <div className="flex items-center gap-x-[4px] text-lg font-bold">
+                            {data?.data?.value?.numberServicesOfRepairation} dịch vụ
+                            <Up fill="white" height={16} width={16} />
+                        </div>
+                        <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
+                            <Services fill="white" height={20} width={20} />
                         </div>
                     </div>
                 </div>
             </div>
+
             <div className="mt-12 basis-[30%] p-0.5 rounded-lg bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                 <h2 className="py-2 rounded-lg bg-color1 text-color4 text-center text-xl font-bold">
-                    Quý 4 <span className="text-white font-normal">(2024)</span>
+                    Biểu đồ
                 </h2>
             </div>
-            <div className="mt-4 flex">
-                <ChartContainer config={chartConfig} className="basis-1/2 min-h-[200px] bg-white rounded-lg">
-                    <BarChart accessibilityLayer data={chartData}>
-                        <CartesianGrid vertical={false} />
-                        <XAxis
-                            dataKey="month"
-                            tickLine={false}
-                            tickMargin={10}
-                            axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
-                        />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <ChartLegend content={<ChartLegendContent />} />
-                        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-                    </BarChart>
-                </ChartContainer>
+            <div className="mt-4 flex gap-x-4">
+                <Card className="basis-1/2 bg-white rounded-lg">
+                    <CardHeader>
+                        <CardTitle>Doanh thu</CardTitle>
+                        <CardDescription>Năm 2024 - Theo quý</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ChartContainer config={chartConfig} >
+                            <BarChart accessibilityLayer data={data?.data?.value?.revenues}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis
+                                    dataKey="quarter"
+                                    tickLine={false}
+                                    tickMargin={10}
+                                    axisLine={false}
+                                    tickFormatter={(value) => `Quý ${value}`}
+                                />
+                                <ChartTooltip
+                                    cursor={false}
+                                    content={<ChartTooltipContent hideLabel />}
+                                />
+                                <Bar dataKey="totalPrice" fill="#4BC8E7" radius={8} />
+                            </BarChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+                <Card className="flex flex-col basis-1/2 bg-white rounded-lg">
+                    <CardHeader className="items-center pb-0">
+                        <CardTitle>Dịch vụ</CardTitle>
+                        <CardDescription>Dịch vụ trong toàn hệ thống</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1 pb-0">
+                        <ChartContainer
+                            config={chartConfig}
+                            className="mx-auto my-8 aspect-square max-h-[250px]"
+                        >
+                            <PieChart>
+                                <ChartTooltip
+                                    cursor={false}
+                                    content={<ChartTooltipContent hideLabel />}
+                                />
+                                <Pie
+                                    data={chartData}
+                                    dataKey="number"
+                                    nameKey="type"
+                                    innerRadius={60}
+                                    strokeWidth={5}
+                                >
+                                    <Label
+                                        content={({ viewBox }) => {
+                                            if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                                return (
+                                                    <text
+                                                        x={viewBox.cx}
+                                                        y={viewBox.cy}
+                                                        textAnchor="middle"
+                                                        dominantBaseline="middle"
+                                                    >
+                                                        <tspan
+                                                            x={viewBox.cx}
+                                                            y={viewBox.cy}
+                                                            className="fill-foreground text-3xl font-bold"
+                                                        >
+                                                            {totalServices.toLocaleString()}
+                                                        </tspan>
+                                                        <tspan
+                                                            x={viewBox.cx}
+                                                            y={(viewBox.cy || 0) + 24}
+                                                            className="fill-muted-foreground"
+                                                        >
+                                                            Dịch vụ
+                                                        </tspan>
+                                                    </text>
+                                                )
+                                            }
+                                        }}
+                                    />
+                                </Pie>
+                            </PieChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
             </div>
         </section>
     );

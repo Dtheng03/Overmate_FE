@@ -29,10 +29,8 @@ const schema = yup
                 "Ngày đặt phải từ ngày mai trở đi",
                 (value) => {
                     const today = new Date();
-                    const tomorrow = new Date(today);
-                    tomorrow.setDate(tomorrow.getDate() + 1);
                     const bookingDate = new Date(value);
-                    return bookingDate >= tomorrow;
+                    return bookingDate >= today;
                 }
             ),
         slot: yup.string().required("Xin hãy nhập thông tin"),
@@ -79,6 +77,7 @@ function ServiceOrder() {
                 title: "Đặt lịch thành công!",
                 description: "Đơn vị thực hiện sẽ liên hệ với bạn",
             });
+            navigate("/")
         },
         onError: () => {
             toast({
