@@ -20,6 +20,7 @@ import ProfilePage from "@/pages/user/profile-page";
 import ServicePage from "@/pages/home-page/service-page";
 import ServiceDetails from "@/pages/home-page/service-details";
 import ServiceOrder from "@/pages/home-page/service-order";
+import OrdersPage from "@/pages/user/order-page";
 
 // be partner page
 import BePartner from "@/pages/be-partner-page/be-partner";
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
             {
                 path: "/mbti-test",
                 element: <MbtiTest />
+            },
+            {
+                path: "/orders",
+                element: <OrdersPage />
             },
             {
                 path: "/service/:categoryId",

@@ -92,6 +92,9 @@ function Header() {
                                     navigate("/profile")
                                 }}>Hồ sơ</Button>
                                 <Button className="w-full justify-start" variant="ghost" onClick={() => {
+                                    navigate("/orders")
+                                }}>Lịch sử</Button>
+                                <Button className="w-full justify-start" variant="ghost" onClick={() => {
                                     localStorage.clear()
                                     navigate("/sign-in")
                                 }}>Đăng xuất</Button>
@@ -135,6 +138,7 @@ function Header() {
                     :
                     <Link to="/profile" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Hồ sơ</Link>
                 }
+                {token && <Link to={"/orders"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Lịch sử</Link>}
                 {!token ?
                     <Link to="/sign-up" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }} >Đăng ký</Link>
                     :
