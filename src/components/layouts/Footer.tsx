@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FacebookIcon, InstaIcon, TiktokIcon } from "../icons/brands";
+import { FacebookIcon, InstaIcon } from "../icons/brands";
 
 const title: string = "mb-[12px] font-semibold";
 const subtitle: string = "mb-[8px] text-xs text-slate-300 text-justify";
@@ -41,7 +41,6 @@ function Footer() {
                     <div className="flex gap-x-[12px]">
                         <FacebookIcon fill="white" height={40} width={40} />
                         <InstaIcon fill="white" height={40} width={40} />
-                        <TiktokIcon fill="white" height={40} width={40} />
                     </div>
                 </div>
             </div>

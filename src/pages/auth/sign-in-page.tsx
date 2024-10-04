@@ -57,11 +57,15 @@ export default function SignInPage() {
                 decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
             );
             localStorage.setItem("role", decoded["role"]);
+            const history = sessionStorage.getItem("history");
 
             if (decoded["role"]?.[1] == "ServiceOwner") {
                 navigate("/partner");
             } else if (decoded["role"] == "Admin") {
                 navigate("/admin");
+            } else if (history) {
+                navigate(history);
+                sessionStorage.clear();
             } else {
                 navigate("/");
             }

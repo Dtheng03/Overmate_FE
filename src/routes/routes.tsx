@@ -19,6 +19,7 @@ import MbtiTest from "@/pages/home-page/mbti-test";
 import ProfilePage from "@/pages/user/profile-page";
 import ServicePage from "@/pages/home-page/service-page";
 import ServiceDetails from "@/pages/home-page/service-details";
+import ServiceOrder from "@/pages/home-page/service-order";
 
 // be partner page
 import BePartner from "@/pages/be-partner-page/be-partner";
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
             {
                 path: "/service/details/:serviceId",
                 element: <ServiceDetails />
+            },
+            {
+                path: "/service/order/:serviceId",
+                element: <ServiceOrder />
             },
         ],
     },

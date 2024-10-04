@@ -1,7 +1,8 @@
 import axiosClient from "@/config";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ClockIcon, LocationIcon, StarIcon } from "@/components/icons/commons";
+import { toast } from "@/hooks/use-toast";
 
 const section = "px-4 md:px-[8%] py-[5%] min-h-[calc(100vh-58px)] flex flex-col items-center bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center";
 const h1 = "mb-8 md:mb-12 text-center text-white text-2xl md:text-3xl font-extrabold uppercase";
@@ -15,10 +16,27 @@ const img2 = "w-[240px] h-[240px] object-cover bg-color4 rounded-[20px] shadow-m
 
 function ServiceDetails() {
     const params = useParams();
+    const navigate = useNavigate();
+    const pathname = useLocation().pathname;
+    const token = localStorage.getItem("token");
+
     const { data } = useQuery({
         queryKey: ['user-service-details'],
         queryFn: () => axiosClient.get(`/service/${params.serviceId}`),
     });
+
+    const handleBook = () => {
+        if (!token) {
+            toast({
+                title: "Bạn chưa đăng nhập",
+                description: "Vui lòng đăng nhập để tiếp tục",
+            });
+            sessionStorage.setItem("history", pathname)
+            navigate("/sign-in");
+        } else {
+            navigate(`/service/order/${data?.data?.value?.id}`)
+        }
+    }
 
     return (
         <section className={section}>
@@ -47,7 +65,10 @@ function ServiceDetails() {
                             <ClockIcon fill="white" width={20} height={20} /> Cập nhật 35 phút trước
                         </p>
                         <div className="flex justify-end">
-                            <span className="inline-block my-4 p-0.5 rounded-[10px] bg-gradient-to-l from-[#011949] to-[#55A6CE] cursor-pointer transition-all hover:scale-[1.02]">
+                            <span
+                                className="inline-block my-4 p-0.5 rounded-[10px] bg-gradient-to-l from-[#011949] to-[#55A6CE] cursor-pointer transition-all hover:scale-[1.02]"
+                                onClick={handleBook}
+                            >
                                 <span className="inline-block bg-color1 rounded-[10px] px-[28px] py-[8px] text-white text-sm ">
                                     Đặt ngay
                                 </span>
@@ -61,6 +82,7 @@ function ServiceDetails() {
                 </div>
             </div>
 
+            {/* dich vụ them */}
             <h2 className={`mt-[60px] mb-[20px] w-fit lg:w-[896px] mx-auto text-white text-2xl font-bold text-center lg:text-left`}>DỊCH VỤ TƯƠNG TỰ</h2>
             <div className="w-fit lg:w-[896px] mx-auto flex flex-col lg:flex-row justify-between flex-wrap">
                 <div className={`${border2} cursor-pointer transition-all hover:scale-[1.02]`}>
