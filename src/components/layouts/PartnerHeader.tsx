@@ -33,7 +33,8 @@ function PartnerHeader() {
             </div>
 
             <div className="hidden lg:flex gap-x-[16px]">
-                <Link to={"/partner/my-services"} className={`${menuItem} ${pathname.includes("/my-services") && isSelected}`}>Dịch vụ của tôi</Link>
+                <Link to={"/partner/my-services"} className={`${menuItem} ${pathname.includes("/my-services") && isSelected}`}>Dịch vụ</Link>
+                <Link to={"/partner/my-orders"} className={`${menuItem} ${pathname.includes("/my-orders") && isSelected}`}>Lịch sử</Link>
             </div>
             <div className="hidden lg:block">
                 <HoverCard openDelay={0}>
@@ -53,7 +54,8 @@ function PartnerHeader() {
             </div>
             <div className={`lg:hidden ${mobileMenuOpen ? "flex" : "hidden"} absolute top-[58px] right-0 w-[300px] flex-col shadow-lg bg-white text-color1`}>
                 <p className={`${menuItemMobile} text-sm`}>Xin chào, {username}</p>
-                <Link to={"/partner/my-services"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Dịch vụ của tôi</Link>
+                <Link to={"/partner/my-services"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Dịch vụ</Link>
+                <Link to={"/partner/my-orders"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Lịch sử</Link>
                 <Link to="/sign-in" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen); localStorage.clear(); }} >Đăng xuất</Link>
             </div>
         </header>

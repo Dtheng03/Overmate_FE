@@ -29,12 +29,14 @@ import SignUpPartner from "@/pages/be-partner-page/sign-up-partner";
 import Welcome from "@/pages/partner/welcome";
 import SignUpService from "@/pages/partner/sign-up-service";
 import MyServices from "@/pages/partner/my-services";
+import MyOrders from "@/pages/partner/my-orders";
 
 // admin page
 import WelcomeAdmin from "@/pages/admin/welcome-admin";
 import DashboardStats from "@/pages/admin/dashboard-stats";
 import DashboardUsers from "@/pages/admin/dashboard-users";
 import DashboardServices from "@/pages/admin/dashboard-services";
+import DashboardOrders from "@/pages/admin/dashboard-orders";
 
 // auth page
 import SignInPage from "@/pages/auth/sign-in-page";
@@ -104,6 +106,10 @@ const router = createBrowserRouter([
             {
                 path: "my-services",
                 element: <MyServices />
+            },
+            {
+                path: "my-orders",
+                element: <MyOrders />
             }
         ],
     },
@@ -148,6 +154,10 @@ const router = createBrowserRouter([
             {
                 path: "services",
                 element: <DashboardServices />
+            },
+            {
+                path: "orders",
+                element: <DashboardOrders />
             },
         ],
     },

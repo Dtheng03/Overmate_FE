@@ -21,6 +21,7 @@ function Header() {
     const { data } = useQuery({
         queryKey: ['category'],
         queryFn: () => axiosClient.get("/servicecategory"),
+        retry: 0
     });
 
     return (

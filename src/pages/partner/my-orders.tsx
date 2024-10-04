@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosClient from "@/config";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     Table,
     TableBody,
@@ -21,6 +21,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -28,8 +29,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Eye } from "@/components/icons/dashboard";
+import { toast } from "@/hooks/use-toast";
 
-function MyServices() {
+function MyOrders() {
     const [pageNumber, setPageNumber] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -47,15 +49,37 @@ function MyServices() {
         };
     }, [searchTerm]);
 
-    const { data, isFetching } = useQuery({
-        queryKey: ['partner-services', pageNumber, debouncedSearchTerm, statusFilter],
+    const { data, isFetching, refetch } = useQuery({
+        queryKey: ['partner-orders', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
-                `/service/service_owner?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&FilterStatus=${statusFilter}`
+                `/order/service_owner?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Filter=${statusFilter}`
             ),
         staleTime: 3000,
         retry: 0
     });
+
+    const updateStatus = useMutation({
+        mutationFn: (body: {
+            OrderId: string,
+            OrderStatus: number
+        }) => axiosClient.put("/order/update", body),
+        onSuccess: () => {
+            toast({
+                title: "Thao tác thành công!",
+                description: "Hãy tải lại nếu chưa thấy sự thay đổi",
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                variant: "destructive",
+                title: "Thao tác thất bại!",
+                description: "Xin vui lòng thử lại.",
+            });
+        },
+    });
+
 
     // Điều khiển khi nhấn "Previous" và "Next"
     const handleNextPage = () => {
@@ -84,9 +108,10 @@ function MyServices() {
         <section className="min-h-screen p-[4%] bg-color1">
             <div className={"my-2 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]"}>
                 <div className="bg-color1 p-2 rounded-[20px]">
-                    <h1 className="text-center text-color4 text-lg font-bold uppercase">Dịch vụ của tôi</h1>
+                    <h1 className="text-center text-color4 text-lg font-bold uppercase">Lịch sử hoạt động</h1>
                 </div>
             </div>
+
             <div className="my-4 flex justify-between items-center">
                 {/* Search Input */}
                 <input
@@ -104,9 +129,9 @@ function MyServices() {
                         onChange={handleStatusChange}
                     >
                         <option value="">Tất cả trạng thái</option>
-                        <option value="1">Chờ xử lý</option>
-                        <option value="2">Chấp nhận</option>
-                        <option value="3">Từ chối</option>
+                        <option value="_processing">Chờ xử lý</option>
+                        <option value="_finished">Hoàn thành</option>
+                        <option value="_cancelled">Hủy</option>
                     </select>
                 </div>
             </div>
@@ -123,11 +148,10 @@ function MyServices() {
                             <Table className="bg-white rounded-lg">
                                 <TableHeader>
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
-                                        <TableHead className="text-center text-white first:rounded-s-lg">Loại dịch vụ</TableHead>
-                                        <TableHead className="text-center text-white">Tên dịch vụ</TableHead>
-                                        <TableHead className="text-center text-white">Đối tác</TableHead>
+                                        <TableHead className="text-center text-white first:rounded-s-lg">Khách hàng</TableHead>
+                                        <TableHead className="text-center text-white">Email</TableHead>
+                                        <TableHead className="text-center text-white">Ngày tạo</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
-                                        <TableHead className="text-center text-white">Thời lượng</TableHead>
                                         <TableHead className="text-center text-white">Trạng thái</TableHead>
                                         <TableHead className="text-center text-white last:rounded-e-lg">Thao tác</TableHead>
                                     </TableRow>
@@ -135,18 +159,17 @@ function MyServices() {
                                 <TableBody>
                                     {data?.data?.value?.items?.map((item: any, index: number) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium first:rounded-s-lg">{item?.serviceCategoryName}</TableCell>
-                                            <TableCell>{item?.name}</TableCell>
-                                            <TableCell>{item?.serviceOwnerName}</TableCell>
-                                            <TableCell>{item?.price?.toLocaleString()} đ</TableCell>
-                                            <TableCell className="text-center">{item?.duration} giờ</TableCell>
+                                            <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
+                                            <TableCell>{item?.userEmail}</TableCell>
+                                            <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
+                                            <TableCell>{item?.price?.toLocaleString()} VND</TableCell>
                                             <TableCell className="text-center">
                                                 {item?.status === 1 && <Badge className="bg-color2" variant="outline">
                                                     <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                                                     Chờ xử lý</Badge>
                                                 }
-                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
-                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
+                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
+                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
                                             </TableCell>
                                             <TableCell className="flex items-center justify-center gap-x-2 last:rounded-e-lg">
                                                 <Dialog>
@@ -164,19 +187,12 @@ function MyServices() {
                                                             </DialogDescription>
                                                         </DialogHeader>
                                                         <div className="grid gap-6 py-6 md:grid-cols-3 bg-white rounded-lg overflow-hidden">
-                                                            <img
-                                                                className="w-full md:w-[200px] object-cover h-auto md:h-full"
-                                                                src={item?.photos?.imageUrl}
-                                                                alt={item?.name}
-                                                            />
-
                                                             <div className="p-4 md:col-span-2 flex flex-col justify-between">
                                                                 <div>
                                                                     <h2 className="text-xl md:text-2xl font-semibold text-color1 mb-4">
-                                                                        {item?.name} - <span className="text-color4">{item?.serviceCategoryName}</span>
+                                                                        {item?.userName} - <span className="text-color4">{item?.userEmail}</span>
                                                                     </h2>
                                                                     <div className="flex items-center justify-between">
-                                                                        <p className="text-color3 mb-4">Đối tác: <span className="font-medium">{item?.serviceOwnerName}</span></p>
                                                                         {item?.status === 1 && <Badge className="bg-color2" variant="outline">
                                                                             <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                                                                             Chờ xử lý</Badge>
@@ -187,15 +203,41 @@ function MyServices() {
                                                                     <p className="text-color2 mb-4 italic">{item?.description}</p>
                                                                 </div>
                                                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                                                                    <p className="font-bold text-color1">Thời lượng:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.duration} giờ</span>
+                                                                    <p className="font-bold text-color1">Ngày đặt:
+                                                                        <span className="ml-2 font-normal text-color2">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</span>
                                                                     </p>
                                                                     <p className="font-bold text-color1 mt-2 md:mt-0">Giá:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} VND</span>
+                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} đ</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        {(item?.status == 1) &&
+                                                            <DialogFooter className="flex justify-end pt-4">
+                                                                <span
+                                                                    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 cursor-pointer transition-colors"
+                                                                    onClick={() => {
+                                                                        updateStatus.mutate({
+                                                                            "OrderId": item?.id,
+                                                                            "OrderStatus": 3
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    Hủy đơn
+                                                                </span>
+                                                                <span
+                                                                    className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 cursor-pointer transition-colors"
+                                                                    onClick={() => {
+                                                                        updateStatus.mutate({
+                                                                            "OrderId": item?.id,
+                                                                            "OrderStatus": 2
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    Hoàn thành
+                                                                </span>
+                                                            </DialogFooter>
+                                                        }
                                                     </DialogContent>
                                                 </Dialog>
                                             </TableCell>
@@ -242,5 +284,4 @@ function MyServices() {
         </section>
     );
 }
-
-export default MyServices;
+export default MyOrders;

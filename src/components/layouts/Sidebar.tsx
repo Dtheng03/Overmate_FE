@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Services, SignOut, Stats, Users } from "../icons/dashboard";
+import { History, Services, SignOut, Stats, Users } from "../icons/dashboard";
 
 const menuItem: string = "mt-4 pl-8 py-2 flex items-center gap-x-4 text-xl font-semibold text-white hover:bg-color2 hover:rounded-r-[20px]";
 const isSelected: string = "bg-color2 rounded-r-[20px]";
@@ -24,6 +24,10 @@ function Sidebar() {
                 <Link to={"/admin/services"} className={`${menuItem} ${pathname.includes("/services") && isSelected}`}>
                     <Services fill="white" height={20} width={20} />
                     Dịch vụ
+                </Link>
+                <Link to={"/admin/orders"} className={`${menuItem} ${pathname.includes("/orders") && isSelected}`}>
+                    <History fill="white" height={20} width={20} />
+                    Lịch sử
                 </Link>
             </div>
             <Link to={"/sign-in"} className={`${menuItem} mb-4`} onClick={() => { localStorage.clear() }}>

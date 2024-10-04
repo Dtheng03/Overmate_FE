@@ -55,6 +55,7 @@ function DashboardUsers() {
                 `/auth/users?pageSize=${pageSize}&pageNumber=${pageNumber}&searchTerm=${debouncedSearchTerm}&isServiceOwner=${isServiceOwner}`
             ),
         staleTime: 3000,
+        retry: 0,
     });
 
     // delete user
@@ -113,7 +114,7 @@ function DashboardUsers() {
                 {/* Search Input */}
                 <input
                     type="text"
-                    placeholder="Tìm kiếm theo tên, email."
+                    placeholder="Tìm kiếm ..."
                     value={searchTerm}
                     onChange={handleSearchChange}
                     className="w-[280px] p-2 border rounded-lg"

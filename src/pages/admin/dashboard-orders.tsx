@@ -17,19 +17,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { Eye } from "@/components/icons/dashboard";
 
-function MyServices() {
+function DashboardOrders() {
     const [pageNumber, setPageNumber] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -48,13 +39,13 @@ function MyServices() {
     }, [searchTerm]);
 
     const { data, isFetching } = useQuery({
-        queryKey: ['partner-services', pageNumber, debouncedSearchTerm, statusFilter],
+        queryKey: ['admin-orders', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
-                `/service/service_owner?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&FilterStatus=${statusFilter}`
+                `/order?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Filter=${statusFilter}`
             ),
         staleTime: 3000,
-        retry: 0
+        retry: 0,
     });
 
     // Điều khiển khi nhấn "Previous" và "Next"
@@ -84,9 +75,10 @@ function MyServices() {
         <section className="min-h-screen p-[4%] bg-color1">
             <div className={"my-2 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]"}>
                 <div className="bg-color1 p-2 rounded-[20px]">
-                    <h1 className="text-center text-color4 text-lg font-bold uppercase">Dịch vụ của tôi</h1>
+                    <h1 className="text-center text-color4 text-lg font-bold">LỊCH SỬ</h1>
                 </div>
             </div>
+
             <div className="my-4 flex justify-between items-center">
                 {/* Search Input */}
                 <input
@@ -104,9 +96,9 @@ function MyServices() {
                         onChange={handleStatusChange}
                     >
                         <option value="">Tất cả trạng thái</option>
-                        <option value="1">Chờ xử lý</option>
-                        <option value="2">Chấp nhận</option>
-                        <option value="3">Từ chối</option>
+                        <option value="_processing">Chờ xử lý</option>
+                        <option value="_finished">Hoàn thành</option>
+                        <option value="_cancelled">Hủy</option>
                     </select>
                 </div>
             </div>
@@ -123,81 +115,29 @@ function MyServices() {
                             <Table className="bg-white rounded-lg">
                                 <TableHeader>
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
-                                        <TableHead className="text-center text-white first:rounded-s-lg">Loại dịch vụ</TableHead>
-                                        <TableHead className="text-center text-white">Tên dịch vụ</TableHead>
+                                        <TableHead className="text-center text-white first:rounded-s-lg">Tên người dùng</TableHead>
+                                        <TableHead className="text-center text-white">Email</TableHead>
                                         <TableHead className="text-center text-white">Đối tác</TableHead>
+                                        <TableHead className="text-center text-white">Ngày tạo</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
-                                        <TableHead className="text-center text-white">Thời lượng</TableHead>
-                                        <TableHead className="text-center text-white">Trạng thái</TableHead>
-                                        <TableHead className="text-center text-white last:rounded-e-lg">Thao tác</TableHead>
+                                        <TableHead className="text-center text-white last:rounded-e-lg">Trạng thái</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {data?.data?.value?.items?.map((item: any, index: number) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium first:rounded-s-lg">{item?.serviceCategoryName}</TableCell>
-                                            <TableCell>{item?.name}</TableCell>
+                                            <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
+                                            <TableCell>{item?.userEmail}</TableCell>
                                             <TableCell>{item?.serviceOwnerName}</TableCell>
+                                            <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
                                             <TableCell>{item?.price?.toLocaleString()} đ</TableCell>
-                                            <TableCell className="text-center">{item?.duration} giờ</TableCell>
                                             <TableCell className="text-center">
                                                 {item?.status === 1 && <Badge className="bg-color2" variant="outline">
                                                     <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                                                     Chờ xử lý</Badge>
                                                 }
-                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
-                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
-                                            </TableCell>
-                                            <TableCell className="flex items-center justify-center gap-x-2 last:rounded-e-lg">
-                                                <Dialog>
-                                                    <DialogTrigger asChild>
-                                                        {/* Use a span instead of button to avoid nesting */}
-                                                        <span className="cursor-pointer">
-                                                            <Eye fill="#4bc8e7" width={20} height={20} />
-                                                        </span>
-                                                    </DialogTrigger>
-                                                    <DialogContent className="max-w-4xl w-full p-6 md:p-8 bg-white rounded-lg shadow-lg">
-                                                        <DialogHeader>
-                                                            <DialogTitle className="text-2xl font-bold text-color1">Thông tin chi tiết</DialogTitle>
-                                                            <DialogDescription>
-                                                                Hãy xem xét kĩ lưỡng trước.
-                                                            </DialogDescription>
-                                                        </DialogHeader>
-                                                        <div className="grid gap-6 py-6 md:grid-cols-3 bg-white rounded-lg overflow-hidden">
-                                                            <img
-                                                                className="w-full md:w-[200px] object-cover h-auto md:h-full"
-                                                                src={item?.photos?.imageUrl}
-                                                                alt={item?.name}
-                                                            />
-
-                                                            <div className="p-4 md:col-span-2 flex flex-col justify-between">
-                                                                <div>
-                                                                    <h2 className="text-xl md:text-2xl font-semibold text-color1 mb-4">
-                                                                        {item?.name} - <span className="text-color4">{item?.serviceCategoryName}</span>
-                                                                    </h2>
-                                                                    <div className="flex items-center justify-between">
-                                                                        <p className="text-color3 mb-4">Đối tác: <span className="font-medium">{item?.serviceOwnerName}</span></p>
-                                                                        {item?.status === 1 && <Badge className="bg-color2" variant="outline">
-                                                                            <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
-                                                                            Chờ xử lý</Badge>
-                                                                        }
-                                                                        {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
-                                                                        {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
-                                                                    </div>
-                                                                    <p className="text-color2 mb-4 italic">{item?.description}</p>
-                                                                </div>
-                                                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                                                                    <p className="font-bold text-color1">Thời lượng:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.duration} giờ</span>
-                                                                    </p>
-                                                                    <p className="font-bold text-color1 mt-2 md:mt-0">Giá:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} VND</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </DialogContent>
-                                                </Dialog>
+                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
+                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -242,5 +182,4 @@ function MyServices() {
         </section>
     );
 }
-
-export default MyServices;
+export default DashboardOrders;

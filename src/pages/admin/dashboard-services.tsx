@@ -32,31 +32,31 @@ import { Eye } from "@/components/icons/dashboard";
 import { toast } from "@/hooks/use-toast";
 
 function DashboardServices() {
-    const [pageNumber, setPageNumber] = useState(1); // Quản lý số trang hiện tại
-    const [searchTerm, setSearchTerm] = useState(""); // Quản lý giá trị tìm kiếm
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(""); // Quản lý giá trị tìm kiếm sau debounce
-    const [statusFilter, setStatusFilter] = useState(""); // State for managing status filter
-    const pageSize = 10; // Số lượng item trên mỗi trang
+    const [pageNumber, setPageNumber] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
+    const pageSize = 10;
 
-    // Debounce logic: update debounced search term after 500ms of inactivity
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm);
-            setPageNumber(1); // Reset to the first page when search term changes
-        }, 500); // Debounce time (500ms)
+            setPageNumber(1);
+        }, 500);
 
         return () => {
-            clearTimeout(handler); // Clear timeout if user types again within 500ms
+            clearTimeout(handler);
         };
-    }, [searchTerm]); // Run this effect whenever `searchTerm` changes
+    }, [searchTerm]);
 
     const { data, isFetching, refetch } = useQuery({
         queryKey: ['admin-services', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
-                `/service?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Status=${statusFilter}&Oderby=${""}`
+                `/service?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Status=${statusFilter}`
             ),
         staleTime: 3000,
+        retry: 0,
     });
 
     const updateStatus = useMutation({
@@ -116,7 +116,7 @@ function DashboardServices() {
                 {/* Search Input */}
                 <input
                     type="text"
-                    placeholder="Tìm kiếm theo tên dịch vụ"
+                    placeholder="Tìm kiếm ..."
                     value={searchTerm}
                     onChange={handleSearchChange}
                     className="w-[280px] p-2 border rounded-lg my-4"
@@ -148,8 +148,8 @@ function DashboardServices() {
                             <Table className="bg-white rounded-lg">
                                 <TableHeader>
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
-                                        <TableHead className="text-center text-white first:rounded-s-lg">Loại dịch vụ</TableHead>
-                                        <TableHead className="text-center text-white">Tên dịch vụ</TableHead>
+                                        <TableHead className="text-center text-white first:rounded-s-lg">Tên dịch vụ</TableHead>
+                                        <TableHead className="text-center text-white">Loại dịch vụ</TableHead>
                                         <TableHead className="text-center text-white">Đối tác</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
                                         <TableHead className="text-center text-white">Thời lượng</TableHead>
@@ -160,10 +160,10 @@ function DashboardServices() {
                                 <TableBody>
                                     {data?.data?.value?.items?.map((item: any, index: number) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium first:rounded-s-lg">{item?.serviceCategoryName}</TableCell>
-                                            <TableCell>{item?.name}</TableCell>
+                                            <TableCell className="font-medium first:rounded-s-lg">{item?.name}</TableCell>
+                                            <TableCell>{item?.serviceCategoryName}</TableCell>
                                             <TableCell>{item?.serviceOwnerName}</TableCell>
-                                            <TableCell>{item?.price?.toLocaleString()} VND</TableCell>
+                                            <TableCell>{item?.price?.toLocaleString()} đ</TableCell>
                                             <TableCell className="text-center">{item?.duration} giờ</TableCell>
                                             <TableCell className="text-center">
                                                 {item?.status === 1 && <Badge className="bg-color2" variant="outline">
@@ -247,6 +247,36 @@ function DashboardServices() {
                                                                 </span>
                                                             </DialogFooter>
                                                         }
+                                                        {(item?.status == 2) &&
+                                                            <DialogFooter className="flex justify-end pt-4">
+                                                                <span
+                                                                    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 cursor-pointer transition-colors"
+                                                                    onClick={() => {
+                                                                        updateStatus.mutate({
+                                                                            "Id": item?.id,
+                                                                            "Status": 3
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    Từ chối
+                                                                </span>
+                                                            </DialogFooter>
+                                                        }
+                                                        {(item?.status == 3) &&
+                                                            <DialogFooter className="flex justify-end pt-4">
+                                                                <span
+                                                                    className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 cursor-pointer transition-colors"
+                                                                    onClick={() => {
+                                                                        updateStatus.mutate({
+                                                                            "Id": item?.id,
+                                                                            "Status": 2
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    Chấp nhận
+                                                                </span>
+                                                            </DialogFooter>
+                                                        }
                                                     </DialogContent>
                                                 </Dialog>
                                             </TableCell>
@@ -289,8 +319,9 @@ function DashboardServices() {
                         </div>
                     }
                 </>
-            )}
-        </section>
+            )
+            }
+        </section >
     );
 }
 
