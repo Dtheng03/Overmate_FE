@@ -209,23 +209,21 @@ function ProfilePage() {
                             <p className="text-white mt-2 font-bold">Email:
                                 <span className="ml-4 font-normal">{data?.data?.value?.email}</span>
                             </p>
-                            <div className="flex justify-between">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
                                 <p className="text-white mt-2 font-bold">Ngày sinh:
                                     <span className="ml-4 font-normal">{data?.data?.value?.dob?.slice(8, 10)}/{data?.data?.value?.dob?.slice(5, 7)}/{data?.data?.value?.dob?.slice(0, 4)}</span>
                                 </p>
-                                <p className="w-[220px] text-white mt-2 font-bold">Giới tính:
+                                <p className="text-white mt-2 font-bold">Giới tính:
                                     <span className="ml-4 font-normal">
                                         {data?.data?.value?.gender == "male" && "Nam"}
                                         {data?.data?.value?.gender == "female" && "Nữ"}
                                         {data?.data?.value?.gender == "other" && "Khác"}
                                     </span>
                                 </p>
-                            </div>
-                            <div className="flex justify-between">
                                 <p className="text-white mt-2 font-bold">Địa chỉ:
                                     <span className="ml-4 font-normal">{data?.data?.value?.location}</span>
                                 </p>
-                                <p className="w-[220px] text-white mt-2 font-bold">Điện thoại:
+                                <p className="text-white mt-2 font-bold">Điện thoại:
                                     <span className="ml-4 font-normal">{data?.data?.value?.phoneNumber}</span>
                                 </p>
                             </div>

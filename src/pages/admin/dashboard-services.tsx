@@ -188,20 +188,19 @@ function DashboardServices() {
                                                                 Hãy xem xét kĩ lưỡng trước.
                                                             </DialogDescription>
                                                         </DialogHeader>
-                                                        <div className="grid gap-6 py-6 md:grid-cols-3 bg-white rounded-lg overflow-hidden">
+                                                        <div className="flex gap-x-4">
                                                             <img
-                                                                className="w-full md:w-[200px] object-cover h-auto md:h-full"
+                                                                className="w-[360px] h-[360px]"
                                                                 src={item?.photos?.imageUrl}
                                                                 alt={item?.name}
                                                             />
-
-                                                            <div className="p-4 md:col-span-2 flex flex-col justify-between">
+                                                            <div className="">
                                                                 <div>
-                                                                    <h2 className="text-xl md:text-2xl font-semibold text-color1 mb-4">
+                                                                    <h2 className="text-xl font-semibold text-color1 mb-4">
                                                                         {item?.name} - <span className="text-color4">{item?.serviceCategoryName}</span>
                                                                     </h2>
-                                                                    <div className="flex items-center justify-between">
-                                                                        <p className="text-color3 mb-4">Đối tác: <span className="font-medium">{item?.serviceOwnerName}</span></p>
+                                                                    <div className="mb-8 flex items-center justify-between">
+                                                                        <p className="text-color3">Đối tác: <span className="font-medium">{item?.serviceOwnerName}</span></p>
                                                                         {item?.status === 1 && <Badge className="bg-color2" variant="outline">
                                                                             <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                                                                             Chờ xử lý</Badge>
@@ -209,14 +208,14 @@ function DashboardServices() {
                                                                         {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
                                                                         {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
                                                                     </div>
-                                                                    <p className="text-color2 mb-4 italic">{item?.description}</p>
+                                                                    <p className="text-color2 mb-8 text-justify italic">{item?.description}</p>
                                                                 </div>
                                                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                                                                     <p className="font-bold text-color1">Thời lượng:
                                                                         <span className="ml-2 font-normal text-color2">{item?.duration} giờ</span>
                                                                     </p>
                                                                     <p className="font-bold text-color1 mt-2 md:mt-0">Giá:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} VND</span>
+                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} đ</span>
                                                                     </p>
                                                                 </div>
                                                             </div>
