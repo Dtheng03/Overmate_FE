@@ -31,7 +31,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { Eye } from "@/components/icons/dashboard";
 import { toast } from "@/hooks/use-toast";
 
-function MyOrders() {
+function DashboardTransactions() {
     const [pageNumber, setPageNumber] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -50,20 +50,20 @@ function MyOrders() {
     }, [searchTerm]);
 
     const { data, isFetching, refetch } = useQuery({
-        queryKey: ['partner-orders', pageNumber, debouncedSearchTerm, statusFilter],
+        queryKey: ['admin-transactions', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
-                `/order/service_owner?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&Filter=${statusFilter}`
+                `/auth/transaction?PageSize=${pageSize}&PageNumber=${pageNumber}&SearchTerm=${debouncedSearchTerm}&FilterStatus=${statusFilter}`
             ),
         staleTime: 3000,
-        retry: 0
+        retry: 0,
     });
 
     const updateStatus = useMutation({
         mutationFn: (body: {
-            OrderId: string,
-            OrderStatus: number
-        }) => axiosClient.put("/order/update", body),
+            TransactionId: string,
+            Status: number
+        }) => axiosClient.put("/auth/transaction/update", body),
         onSuccess: () => {
             toast({
                 title: "Thao tác thành công!",
@@ -79,7 +79,6 @@ function MyOrders() {
             });
         },
     });
-
 
     // Điều khiển khi nhấn "Previous" và "Next"
     const handleNextPage = () => {
@@ -105,10 +104,10 @@ function MyOrders() {
     };
 
     return (
-        <section className="min-h-[calc(100vh-58px)] p-[4%] bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center">
+        <section className="min-h-screen p-[4%] bg-color1">
             <div className={"my-2 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]"}>
                 <div className="bg-color1 p-2 rounded-[20px]">
-                    <h1 className="text-center text-color4 text-lg font-bold uppercase">Lịch sử hoạt động</h1>
+                    <h1 className="text-center text-color4 text-lg font-bold uppercase">Giao dịch</h1>
                 </div>
             </div>
 
@@ -129,9 +128,9 @@ function MyOrders() {
                         onChange={handleStatusChange}
                     >
                         <option value="">Tất cả trạng thái</option>
-                        <option value="_processing">Chờ xử lý</option>
-                        <option value="_finished">Hoàn thành</option>
-                        <option value="_cancelled">Hủy</option>
+                        <option value="Active">Chờ xử lý</option>
+                        <option value="Committed">Thành công</option>
+                        <option value="Aborted">Hủy bỏ</option>
                     </select>
                 </div>
             </div>
@@ -148,10 +147,10 @@ function MyOrders() {
                             <Table className="bg-white rounded-lg">
                                 <TableHeader>
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
-                                        <TableHead className="text-center text-white first:rounded-s-lg">Khách hàng</TableHead>
-                                        <TableHead className="text-center text-white">Email</TableHead>
+                                        <TableHead className="text-center text-white first:rounded-s-lg">Tên đối tác</TableHead>
+                                        <TableHead className="text-center text-white">Số tiền</TableHead>
                                         <TableHead className="text-center text-white">Ngày tạo</TableHead>
-                                        <TableHead className="text-center text-white">Giá</TableHead>
+                                        <TableHead className="text-center text-white">Ngày xác nhận</TableHead>
                                         <TableHead className="text-center text-white">Trạng thái</TableHead>
                                         <TableHead className="text-center text-white last:rounded-e-lg">Thao tác</TableHead>
                                     </TableRow>
@@ -159,17 +158,17 @@ function MyOrders() {
                                 <TableBody>
                                     {data?.data?.value?.items?.map((item: any, index: number) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
-                                            <TableCell>{item?.userEmail}</TableCell>
-                                            <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
-                                            <TableCell>{item?.price?.toLocaleString()} VND</TableCell>
+                                            <TableCell className="font-medium first:rounded-s-lg">{item?.serviceOwnerName}</TableCell>
+                                            <TableCell>{item?.amount?.toLocaleString()} đ</TableCell>
+                                            <TableCell className="text-center">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
+                                            <TableCell className="text-center">{item?.updatedDate?.slice(8, 10)}/{item?.updatedDate?.slice(5, 7)}/{item?.updatedDate?.slice(0, 4)}</TableCell>
                                             <TableCell className="text-center">
-                                                {item?.status === 1 && <Badge className="bg-color2" variant="outline">
+                                                {item?.status === "Active" && <Badge className="bg-color2" variant="outline">
                                                     <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                                                     Chờ xử lý</Badge>
                                                 }
-                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
-                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
+                                                {item?.status === "Committed" && <Badge className="bg-green-400" variant="outline">Thành công</Badge>}
+                                                {item?.status === "Aborted" && <Badge className="bg-red-400" variant="outline">Hủy bỏ</Badge>}
                                             </TableCell>
                                             <TableCell className="flex items-center justify-center gap-x-2 last:rounded-e-lg">
                                                 <Dialog>
@@ -179,62 +178,66 @@ function MyOrders() {
                                                             <Eye fill="#4bc8e7" width={20} height={20} />
                                                         </span>
                                                     </DialogTrigger>
-                                                    <DialogContent className="max-w-4xl w-full p-6 md:p-8 bg-white rounded-lg shadow-lg">
+                                                    <DialogContent className="p-6 md:p-8 bg-white rounded-lg shadow-lg">
                                                         <DialogHeader>
                                                             <DialogTitle className="text-2xl font-bold text-color1">Thông tin chi tiết</DialogTitle>
                                                             <DialogDescription>
-                                                                Hãy xem xét kĩ lưỡng trước.
+                                                                Hãy xem xét và kiểm tra kĩ lưỡng trước khi xác nhận.
                                                             </DialogDescription>
                                                         </DialogHeader>
-                                                        <div className="grid gap-6 py-6 md:grid-cols-3 bg-white rounded-lg overflow-hidden">
-                                                            <div className="p-4 md:col-span-2 flex flex-col justify-between">
-                                                                <div>
-                                                                    <h2 className="text-xl md:text-2xl font-semibold text-color1 mb-4">
-                                                                        {item?.userName} - <span className="text-color4">{item?.userEmail}</span>
-                                                                    </h2>
-                                                                    <div className="flex items-center justify-between">
-                                                                        {item?.status === 1 && <Badge className="bg-color2" variant="outline">
-                                                                            <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
-                                                                            Chờ xử lý</Badge>
-                                                                        }
-                                                                        {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
-                                                                        {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
-                                                                    </div>
-                                                                    <p className="text-color2 mb-4 italic">{item?.description}</p>
-                                                                </div>
-                                                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                                                                    <p className="font-bold text-color1">Ngày đặt:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</span>
-                                                                    </p>
-                                                                    <p className="font-bold text-color1 mt-2 md:mt-0">Giá:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} đ</span>
-                                                                    </p>
-                                                                </div>
+                                                        <div className="">
+                                                            <h2 className="text-lg font-semibold text-color1 mb-2 flex justify-between">
+                                                                Id giao dịch:
+                                                                {item?.status === "Active" && <Badge className="bg-color2" variant="outline">
+                                                                    <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
+                                                                    Chờ xử lý</Badge>
+                                                                }
+                                                                {item?.status === "Committed" && <Badge className="bg-green-400" variant="outline">Thành công</Badge>}
+                                                                {item?.status === "Aborted" && <Badge className="bg-red-400" variant="outline">Hủy bỏ</Badge>}
+                                                            </h2>
+                                                            <p className="mb-4 font-normal text-color2">{item?.transactionId}</p>
+                                                            <p className="font-bold text-color1 mb-4">
+                                                                Đối tác:
+                                                                <span className="ml-2 font-normal text-color2">{item?.serviceOwnerName}</span>
+                                                            </p>
+                                                            <div className="flex justify-between items-center mb-4">
+                                                                <p className="font-bold text-color1">
+                                                                    Ngày tạo:
+                                                                    <span className="ml-2 font-normal text-color2">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</span>
+                                                                </p>
+                                                                <p className="font-bold text-color1">
+                                                                    Ngày xác nhận:
+                                                                    <span className="ml-2 font-normal text-color2">{item?.updatedDate?.slice(8, 10)}/{item?.updatedDate?.slice(5, 7)}/{item?.updatedDate?.slice(0, 4)}</span>
+                                                                </p>
                                                             </div>
+                                                            <p className="font-bold text-color1 mt-2 md:mt-0">
+                                                                Số tiền:
+                                                                <span className="ml-2 font-normal text-color2">{item?.amount?.toLocaleString()} đ</span>
+                                                            </p>
                                                         </div>
-                                                        {(item?.status == 1) &&
+                                                        {(item?.status == "Active") &&
                                                             <DialogFooter className="flex justify-end pt-4">
                                                                 <span
                                                                     className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 cursor-pointer transition-colors"
                                                                     onClick={() => {
                                                                         updateStatus.mutate({
-                                                                            "OrderId": item?.id,
-                                                                            "OrderStatus": 3
+                                                                            "TransactionId": item?.transactionId,
+                                                                            "Status": 2
                                                                         })
                                                                     }}
                                                                 >
-                                                                    Hủy đơn
+                                                                    Hủy bỏ
                                                                 </span>
                                                                 <span
                                                                     className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 cursor-pointer transition-colors"
                                                                     onClick={() => {
                                                                         updateStatus.mutate({
-                                                                            "OrderId": item?.id,
-                                                                            "OrderStatus": 2
+                                                                            "TransactionId": item?.transactionId,
+                                                                            "Status": 1
                                                                         })
                                                                     }}
                                                                 >
-                                                                    Hoàn thành
+                                                                    Thành công
                                                                 </span>
                                                             </DialogFooter>
                                                         }
@@ -280,8 +283,10 @@ function MyOrders() {
                         </div>
                     }
                 </>
-            )}
-        </section>
+            )
+            }
+        </section >
     );
 }
-export default MyOrders;
+
+export default DashboardTransactions;

@@ -35,16 +35,20 @@ function PartnerHeader() {
             <div className="hidden lg:flex gap-x-[16px]">
                 <Link to={"/partner/my-services"} className={`${menuItem} ${pathname.includes("/my-services") && isSelected}`}>Dịch vụ</Link>
                 <Link to={"/partner/my-orders"} className={`${menuItem} ${pathname.includes("/my-orders") && isSelected}`}>Lịch sử</Link>
+                <Link to={"/partner/my-transactions"} className={`${menuItem} ${pathname.includes("/my-transactions") && isSelected}`}>Giao dịch</Link>
             </div>
             <div className="hidden lg:block">
                 <HoverCard openDelay={0}>
                     <HoverCardTrigger>
-                        <div className={`p-2 flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
+                        <div className={`px-2 py-[4px] flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
                             <p className="text-sm">Xin chào, {username}</p>
                             <UserIcon fill="white" height={16} width={16} />
                         </div>
                     </HoverCardTrigger>
                     <HoverCardContent className="z-[9999] w-[160px] p-0">
+                        <Button className="w-full justify-start" variant="ghost" onClick={() => {
+                            navigate("/partner/my-account")
+                        }}>Tài khoản</Button>
                         <Button className="w-full justify-start" variant="ghost" onClick={() => {
                             localStorage.clear()
                             navigate("/sign-in")
@@ -56,6 +60,7 @@ function PartnerHeader() {
                 <p className={`${menuItemMobile} text-sm`}>Xin chào, {username}</p>
                 <Link to={"/partner/my-services"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Dịch vụ</Link>
                 <Link to={"/partner/my-orders"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Lịch sử</Link>
+                <Link to={"/partner/my-transactions"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Giao dịch</Link>
                 <Link to="/sign-in" className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen); localStorage.clear(); }} >Đăng xuất</Link>
             </div>
         </header>

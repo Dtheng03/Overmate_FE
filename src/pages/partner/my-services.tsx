@@ -27,9 +27,12 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { Eye } from "@/components/icons/dashboard";
+import { Eye, Services } from "@/components/icons/dashboard";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 function MyServices() {
+    const navigate = useNavigate();
     const [pageNumber, setPageNumber] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -81,7 +84,7 @@ function MyServices() {
     };
 
     return (
-        <section className="min-h-screen p-[4%] bg-color1">
+        <section className="min-h-[calc(100vh-58px)] p-[4%] bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center">
             <div className={"my-2 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]"}>
                 <div className="bg-color1 p-2 rounded-[20px]">
                     <h1 className="text-center text-color4 text-lg font-bold uppercase">Dịch vụ của tôi</h1>
@@ -109,6 +112,15 @@ function MyServices() {
                         <option value="3">Từ chối</option>
                     </select>
                 </div>
+                <Button
+                    className="flex items-center gap-x-4 bg-color2 hover:bg-color3"
+                    onClick={() => {
+                        navigate("/partner/sign-up-service")
+                    }}
+                >
+                    <Services fill="white" width={20} height={20} />
+                    Đăng ký dịch vụ
+                </Button>
             </div>
             {isFetching ? (
                 <div className={"my-2 p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]"}>

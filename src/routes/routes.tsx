@@ -34,6 +34,9 @@ import Welcome from "@/pages/partner/welcome";
 import SignUpService from "@/pages/partner/sign-up-service";
 import MyServices from "@/pages/partner/my-services";
 import MyOrders from "@/pages/partner/my-orders";
+import MyTransactions from "@/pages/partner/my-transactions";
+import NewTransactions from "@/pages/partner/new-transaction";
+import MyAccount from "@/pages/partner/my-account";
 
 // admin page
 import WelcomeAdmin from "@/pages/admin/welcome-admin";
@@ -41,6 +44,7 @@ import DashboardStats from "@/pages/admin/dashboard-stats";
 import DashboardUsers from "@/pages/admin/dashboard-users";
 import DashboardServices from "@/pages/admin/dashboard-services";
 import DashboardOrders from "@/pages/admin/dashboard-orders";
+import DashboardTransactions from "@/pages/admin/dashboard-transactions";
 
 // auth page
 import SignInPage from "@/pages/auth/sign-in-page";
@@ -130,7 +134,19 @@ const router = createBrowserRouter([
             {
                 path: "my-orders",
                 element: <MyOrders />
-            }
+            },
+            {
+                path: "my-transactions",
+                element: <MyTransactions />
+            },
+            {
+                path: "new-transaction",
+                element: <NewTransactions />
+            },
+            {
+                path: "my-account",
+                element: <MyAccount />
+            },
         ],
     },
     {
@@ -178,6 +194,10 @@ const router = createBrowserRouter([
             {
                 path: "orders",
                 element: <DashboardOrders />
+            },
+            {
+                path: "transactions",
+                element: <DashboardTransactions />
             },
         ],
     },
