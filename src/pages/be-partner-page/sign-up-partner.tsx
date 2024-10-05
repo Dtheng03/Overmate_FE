@@ -178,9 +178,9 @@ function SignUpPartner() {
                     <Checkbox id="terms" onCheckedChange={() => { setIsChecked(!isChecked) }} />
                     <label
                         htmlFor="terms"
-                        className="text-xs font-medium leading-none"
+                        className="text-sm font-medium"
                     >
-                        Bằng cách đăng ký, bạn xác nhận rằng bạn đồng ý với việc <span className="text-color2">Overmate</span> lưu trữ và xử lý dữ liệu doanh nghiệp của bạn như được mô tả trong Chính sách <span className="text-color2">quyền riêng tư</span> của chúng tôi.
+                        Bằng cách đăng ký này, tôi đồng ý với các chính sách trong <Link className="text-color2" to={"/safety-security"}>An toàn - Bảo mật</Link>, <Link className="text-color2" to={"/terms-charter"}>Điều khoản - Điều lệ</Link> và <Link className="text-color2" to={"/privacy-policy"}>Chính sách quyền riêng tư</Link> của OVERMATE.
                     </label>
                 </p>
                 {registerPartner.isPending ? (

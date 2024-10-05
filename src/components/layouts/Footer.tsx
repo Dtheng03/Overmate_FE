@@ -18,12 +18,10 @@ function Footer() {
                 </div>
                 <div className="w-full sm:w-full md:w-1/4 lg:basis-1/5 md:max-w-[220px]">
                     <h3 className={title}>Về chúng tôi</h3>
-                    <p className={subtitle}>Giới thiệu</p>
-                    <p className={subtitle}>An toàn - Bảo mật</p>
-                    <p className={subtitle}>Điều khoản - Điều lệ</p>
-                    <p className={subtitle}>Chính sách quyền riêng tư</p>
-                    <p className={subtitle}>Liên hệ</p>
-                    <p className={subtitle}>Hỏi đáp</p>
+                    <p className={subtitle}><Link to={"/about-us"}>Giới thiệu</Link></p>
+                    <p className={subtitle}><Link to={"/safety-security"}>An toàn - Bảo mật</Link></p>
+                    <p className={subtitle}><Link to={"/terms-charter"}>Điều khoản - Điều lệ</Link></p>
+                    <p className={subtitle}><Link to={"/privacy-policy"}>Chính sách quyền riêng tư</Link></p>
                 </div>
                 <div className="w-full sm:w-full md:w-1/4 lg:basis-1/5 md:max-w-[220px]">
                     <h3 className={title}>Dịch vụ nổi bật</h3>
@@ -38,9 +36,21 @@ function Footer() {
                 </div>
                 <div className="w-full sm:w-full md:w-1/4 lg:basis-1/5 md:max-w-[220px]">
                     <h3 className={title}>Kết nối với chúng tôi</h3>
-                    <div className="flex gap-x-[12px]">
-                        <FacebookIcon fill="white" height={40} width={40} />
-                        <InstaIcon fill="white" height={40} width={40} />
+                    <div className="flex gap-x-[12px] items-center">
+                        <a
+                            href="https://www.facebook.com/profile.php?id=61565985286928"
+                            target="_blank"
+                            className="cursor-pointer bg-white rounded-[50%]"
+                        >
+                            <FacebookIcon fill="#0866ff" height={40} width={40} />
+                        </a>
+                        <a
+                            href="https://www.instagram.com/overmateteam/"
+                            target="_blank"
+                            className="bg-gradient-to-t from-[#F58529] via-[#DD2A7B] to-[#515BD4] rounded-[50%] p-[2px]"
+                        >
+                            <InstaIcon fill="white" height={40} width={40} />
+                        </a>
                     </div>
                 </div>
             </div>

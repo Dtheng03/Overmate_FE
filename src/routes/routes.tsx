@@ -14,7 +14,10 @@ import DashboardLayout from "@/layouts/dashboard-layout";
 // home page
 import HomePage from "../pages/home-page/home-page";
 import AboutUsPage from "@/pages/home-page/about-us-page";
-import AboutTestPage from "@/pages/home-page/about-test-page";
+import AboutExplorePage from "@/pages/home-page/about-explore-page";
+import SafetySecurity from "@/pages/home-page/safety-security";
+import TermsCharter from "@/pages/home-page/terms-charter";
+import PrivacyPolicy from "@/pages/home-page/privacy-policy";
 import MbtiTest from "@/pages/home-page/mbti-test";
 import ProfilePage from "@/pages/user/profile-page";
 import ServicePage from "@/pages/home-page/service-page";
@@ -62,8 +65,20 @@ const router = createBrowserRouter([
                 element: <AboutUsPage />
             },
             {
-                path: "/about-test",
-                element: <AboutTestPage />
+                path: "/about-explore",
+                element: <AboutExplorePage />
+            },
+            {
+                path: "/safety-security",
+                element: <SafetySecurity />
+            },
+            {
+                path: "/terms-charter",
+                element: <TermsCharter />
+            },
+            {
+                path: "/privacy-policy",
+                element: <PrivacyPolicy />
             },
             {
                 path: "/profile",

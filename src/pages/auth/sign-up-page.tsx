@@ -146,7 +146,9 @@ function SignUpPage() {
                 </div>
                 <p className="flex items-center space-x-2 mb-4">
                     <Checkbox id="terms" onCheckedChange={() => setIsChecked(!isChecked)} />
-                    <label htmlFor="terms" className="text-sm text-white font-medium">Tôi đồng ý với các <Link className="text-color2" to={"#"}>điều khoản</Link> và bảo mật cá nhân</label>
+                    <label htmlFor="terms" className="text-sm text-white font-medium">
+                        Tôi đồng ý với các chính sách trong <Link className="text-color2" to={"/safety-security"}>An toàn - Bảo mật</Link>, <Link className="text-color2" to={"/terms-charter"}>Điều khoản - Điều lệ</Link> và <Link className="text-color2" to={"/privacy-policy"}>Chính sách quyền riêng tư</Link>.
+                    </label>
                 </p>
                 {registerUser.isPending ? (
                     <Button disabled className={`${social} mb-8`}>

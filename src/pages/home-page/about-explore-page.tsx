@@ -2,10 +2,10 @@ const card: string = "h-full bg-color1 p-[4%] rounded-[20px]";
 const title: string = "mb-4 text-color4 text-xl font-bold text-center";
 const content: string = "text-white text-justify";
 
-function AboutTestPage() {
+function AboutExplorePage() {
     return (
         <section className="px-[10%] py-[5%] min-h-[calc(100vh-58px)] bg-color1 bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center">
-            <h1 className="mb-16 text-center text-white text-3xl font-extrabold">BÀI KIỂM TRA</h1>
+            <h1 className="mb-16 text-center text-white text-3xl font-extrabold uppercase">Khám phá tính cách</h1>
             <div className="block lg:flex justify-evenly">
                 <div className="my-4 lg:m-0 basis-[30%] p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE]">
                     <div className={card}>
@@ -36,4 +36,4 @@ function AboutTestPage() {
     );
 }
 
-export default AboutTestPage;
+export default AboutExplorePage;

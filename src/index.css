@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --penn-blue-color: #001949;
-    --prussian-blue-color: #143659;
-    --vivid-sky-blue-color: #4bc8e7;
-    --melon-color: #ffc2b8;
-    --blush-color: #d95970;
-}
-
 * {
     padding: 0;
     margin: 0;

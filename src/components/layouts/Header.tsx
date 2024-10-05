@@ -44,7 +44,7 @@ function Header() {
 
             <div className="hidden lg:flex gap-x-[16px]">
                 <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && isSelected}`}>Về chúng tôi</Link>
-                <Link to={"/about-test"} className={`${menuItem} ${pathname.includes("/about-test") && isSelected}`}>Bài kiểm tra</Link>
+                <Link to={"/about-explore"} className={`${menuItem} ${pathname.includes("/about-explore") && isSelected}`}>Khám phá</Link>
                 <HoverCard openDelay={0}>
                     <HoverCardTrigger>
                         <span className={`${menuItem} cursor-pointer ${pathname.includes("/service") && isSelected}`}>Dịch vụ</span>
@@ -114,7 +114,7 @@ function Header() {
             <div className={`lg:hidden ${mobileMenuOpen ? "flex" : "hidden"} absolute top-[58px] right-0 w-[300px] flex-col shadow-lg bg-white text-color1`}>
                 {token && <p className={`${menuItemMobile} text-sm`}>Xin chào, {username}</p>}
                 <Link to={"/about-us"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Về chúng tôi</Link>
-                <Link to={"/about-test"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Bài kiểm tra</Link>
+                <Link to={"/about-explore"} className={`${menuItemMobile}`} onClick={() => { setMobileMenuOpen(!mobileMenuOpen) }}>Khám phá</Link>
                 <span className={`${menuItemMobile} cursor-pointer`} onClick={() => { setServiceOpen(!serviceOpen) }}>Dịch vụ</span>
                 <div className={`${serviceOpen ? "block" : "hidden"}`}>
                     {data?.data?.value?.items?.map((item: any, index: number) => (
