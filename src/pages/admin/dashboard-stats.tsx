@@ -62,7 +62,7 @@ function DashboardStats() {
                     <p className="text-xs text-color1 font-light">Tăng <span className="font-bold">{data?.data?.value?.numberUsersUntilToday - data?.data?.value?.numberUsersPreviousDay}</span> so với hôm qua </p>
                 </div>
                 <div className="basis-1/4 p-[2%] bg-white rounded-lg">
-                    <h3 className="text-color1 text-lg font-bold text-center">Doanh thu</h3>
+                    <h3 className="text-color1 text-lg font-bold text-center">Doanh thu ngày</h3>
                     <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
                             {data?.data?.value?.revenuePerDay?.toLocaleString()} đ
