@@ -150,9 +150,11 @@ function MyOrders() {
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
                                         <TableHead className="text-center text-white first:rounded-s-lg">Khách hàng</TableHead>
                                         <TableHead className="text-center text-white">Email</TableHead>
+                                        <TableHead className="text-center text-white">Dịch vụ</TableHead>
                                         <TableHead className="text-center text-white">Ngày tạo</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
                                         <TableHead className="text-center text-white">Trạng thái</TableHead>
+                                        <TableHead className="text-center text-white">Hoàn tiền</TableHead>
                                         <TableHead className="text-center text-white last:rounded-e-lg">Thao tác</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -161,6 +163,7 @@ function MyOrders() {
                                         <TableRow key={index}>
                                             <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
                                             <TableCell>{item?.userEmail}</TableCell>
+                                            <TableCell>{item?.serviceName}</TableCell>
                                             <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
                                             <TableCell>{item?.price?.toLocaleString()} VND</TableCell>
                                             <TableCell className="text-center">
@@ -171,6 +174,15 @@ function MyOrders() {
                                                 {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
                                                 {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
                                             </TableCell>
+                                            <TableCell className="text-center">
+                                                {item?.refundStatus === 1 &&
+                                                    <Badge className="bg-color2" variant="outline">
+                                                        <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
+                                                        Chờ hoàn tiền
+                                                    </Badge>
+                                                }
+                                                {item?.refundStatus === 2 && <Badge className="bg-green-400" variant="outline">Đã hoàn tiền</Badge>}
+                                            </TableCell>
                                             <TableCell className="flex items-center justify-center gap-x-2 last:rounded-e-lg">
                                                 <Dialog>
                                                     <DialogTrigger asChild>
@@ -179,38 +191,47 @@ function MyOrders() {
                                                             <Eye fill="#4bc8e7" width={20} height={20} />
                                                         </span>
                                                     </DialogTrigger>
-                                                    <DialogContent className="max-w-4xl w-full p-6 md:p-8 bg-white rounded-lg shadow-lg">
+                                                    <DialogContent className="p-6 md:p-8 bg-white rounded-lg shadow-lg">
                                                         <DialogHeader>
                                                             <DialogTitle className="text-2xl font-bold text-color1">Thông tin chi tiết</DialogTitle>
                                                             <DialogDescription>
                                                                 Hãy xem xét kĩ lưỡng trước.
                                                             </DialogDescription>
                                                         </DialogHeader>
-                                                        <div className="grid gap-6 py-6 md:grid-cols-3 bg-white rounded-lg overflow-hidden">
-                                                            <div className="p-4 md:col-span-2 flex flex-col justify-between">
-                                                                <div>
-                                                                    <h2 className="text-xl md:text-2xl font-semibold text-color1 mb-4">
-                                                                        {item?.userName} - <span className="text-color4">{item?.userEmail}</span>
-                                                                    </h2>
-                                                                    <div className="flex items-center justify-between">
-                                                                        {item?.status === 1 && <Badge className="bg-color2" variant="outline">
-                                                                            <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
-                                                                            Chờ xử lý</Badge>
-                                                                        }
-                                                                        {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Chấp nhận</Badge>}
-                                                                        {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Từ chối</Badge>}
-                                                                    </div>
-                                                                    <p className="text-color2 mb-4 italic">{item?.description}</p>
-                                                                </div>
-                                                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                                                                    <p className="font-bold text-color1">Ngày đặt:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</span>
-                                                                    </p>
-                                                                    <p className="font-bold text-color1 mt-2 md:mt-0">Giá:
-                                                                        <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} đ</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
+                                                        <div className="">
+                                                            <h2 className="text-lg font-semibold text-color1 mb-2 flex justify-between">
+                                                                Id giao dịch:
+                                                                {item?.status === 1 && <Badge className="bg-color2" variant="outline">
+                                                                    <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
+                                                                    Chờ xử lý</Badge>
+                                                                }
+                                                                {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
+                                                                {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
+                                                                {item?.refundStatus === 1 &&
+                                                                    <Badge className="bg-color2" variant="outline">
+                                                                        <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
+                                                                        Chờ hoàn tiền
+                                                                    </Badge>
+                                                                }
+                                                                {item?.refundStatus === 2 && <Badge className="bg-green-400" variant="outline">Đã hoàn tiền</Badge>}
+                                                            </h2>
+                                                            <p className="mb-4 font-normal text-color2">{item?.id}</p>
+                                                            <p className="font-bold text-color1 mb-4">
+                                                                Khách hàng:
+                                                                <span className="ml-2 font-normal text-color2">{item?.userName}</span>
+                                                            </p>
+                                                            <p className="font-bold text-color1 mb-4">
+                                                                Dịch vụ:
+                                                                <span className="ml-2 font-normal text-color2">{item?.serviceName}</span>
+                                                            </p>
+                                                            <p className="font-bold text-color1 mb-4">
+                                                                Ngày tạo:
+                                                                <span className="ml-2 font-normal text-color2">{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</span>
+                                                            </p>
+                                                            <p className="font-bold text-color1 mt-2 md:mt-0">
+                                                                Số tiền:
+                                                                <span className="ml-2 font-normal text-color2">{item?.price?.toLocaleString()} đ</span>
+                                                            </p>
                                                         </div>
                                                         {(item?.status == 1) &&
                                                             <DialogFooter className="flex justify-end pt-4">

@@ -117,6 +117,8 @@ function OrdersPage() {
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
                                         <TableHead className="text-center text-white first:rounded-s-lg">Khách hàng</TableHead>
                                         <TableHead className="text-center text-white">Email</TableHead>
+                                        <TableHead className="text-center text-white">Dịch vụ</TableHead>
+                                        <TableHead className="text-center text-white">Bên cung cấp</TableHead>
                                         <TableHead className="text-center text-white">Ngày tạo</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
                                         <TableHead className="text-center text-white last:rounded-e-lg">Trạng thái</TableHead>
@@ -127,6 +129,8 @@ function OrdersPage() {
                                         <TableRow key={index}>
                                             <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
                                             <TableCell>{item?.userEmail}</TableCell>
+                                            <TableCell>{item?.serviceName}</TableCell>
+                                            <TableCell>{item?.serviceOwnerName}</TableCell>
                                             <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
                                             <TableCell>{item?.price?.toLocaleString()} VND</TableCell>
                                             <TableCell className="text-center last:rounded-e-lg">

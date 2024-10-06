@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosClient from "@/config";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     Table,
     TableBody,
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { toast } from "@/hooks/use-toast";
 
 function DashboardOrders() {
     const [pageNumber, setPageNumber] = useState(1);
@@ -38,7 +39,7 @@ function DashboardOrders() {
         };
     }, [searchTerm]);
 
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, refetch } = useQuery({
         queryKey: ['admin-orders', pageNumber, debouncedSearchTerm, statusFilter],
         queryFn: () =>
             axiosClient.get(
@@ -46,6 +47,27 @@ function DashboardOrders() {
             ),
         staleTime: 3000,
         retry: 0,
+    });
+
+    const refundOrder = useMutation({
+        mutationFn: (body: {
+            "OrderId": string,
+            "RefundStatus": number
+        }) => axiosClient.put(`/order/refund`, body),
+        onSuccess: () => {
+            toast({
+                title: "Thao tác thành công!",
+                description: "Hãy tải lại trang nếu không thấy thay đổi",
+            });
+            refetch();
+        },
+        onError: () => {
+            toast({
+                variant: "destructive",
+                title: "Thao tác thất bại!",
+                description: "Xin vui lòng thử lại.",
+            });
+        },
     });
 
     // Điều khiển khi nhấn "Previous" và "Next"
@@ -117,10 +139,12 @@ function DashboardOrders() {
                                     <TableRow className="rounded-t-lg bg-color2 hover:bg-color2">
                                         <TableHead className="text-center text-white first:rounded-s-lg">Tên người dùng</TableHead>
                                         <TableHead className="text-center text-white">Email</TableHead>
+                                        <TableHead className="text-center text-white">Dịch vụ</TableHead>
                                         <TableHead className="text-center text-white">Đối tác</TableHead>
                                         <TableHead className="text-center text-white">Ngày tạo</TableHead>
                                         <TableHead className="text-center text-white">Giá</TableHead>
-                                        <TableHead className="text-center text-white last:rounded-e-lg">Trạng thái</TableHead>
+                                        <TableHead className="text-center text-white">Trạng thái</TableHead>
+                                        <TableHead className="text-center text-white last:rounded-e-lg">Hoàn tiền</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -128,6 +152,7 @@ function DashboardOrders() {
                                         <TableRow key={index}>
                                             <TableCell className="font-medium first:rounded-s-lg">{item?.userName}</TableCell>
                                             <TableCell>{item?.userEmail}</TableCell>
+                                            <TableCell>{item?.serviceName}</TableCell>
                                             <TableCell>{item?.serviceOwnerName}</TableCell>
                                             <TableCell>{item?.createdDate?.slice(8, 10)}/{item?.createdDate?.slice(5, 7)}/{item?.createdDate?.slice(0, 4)}</TableCell>
                                             <TableCell>{item?.price?.toLocaleString()} đ</TableCell>
@@ -138,6 +163,24 @@ function DashboardOrders() {
                                                 }
                                                 {item?.status === 2 && <Badge className="bg-green-400" variant="outline">Hoàn thành</Badge>}
                                                 {item?.status === 3 && <Badge className="bg-red-400" variant="outline">Hủy</Badge>}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                {item?.refundStatus === 1 &&
+                                                    <Badge
+                                                        className="bg-color2 cursor-pointer"
+                                                        variant="outline"
+                                                        onClick={() => {
+                                                            refundOrder.mutate({
+                                                                OrderId: item?.id,
+                                                                RefundStatus: 2
+                                                            })
+                                                        }}
+                                                    >
+                                                        <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
+                                                        Chờ hoàn tiền
+                                                    </Badge>
+                                                }
+                                                {item?.refundStatus === 2 && <Badge className="bg-green-400" variant="outline">Đã hoàn tiền</Badge>}
                                             </TableCell>
                                         </TableRow>
                                     ))}
