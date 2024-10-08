@@ -69,7 +69,7 @@ function ServicePage() {
                                     <div className={`${card}`}>
                                         <img className={img} src={item?.photos?.imageUrl} alt={item.name} />
                                         <div className="w-full sm:w-[240px]">
-                                            <p className="text-white font-extrabold uppercase mt-[8px] mb-[4px]">
+                                            <p className="text-white font-extrabold uppercase mt-[8px] mb-[4px] text-nowrap overflow-hidden">
                                                 {item?.name}
                                             </p>
                                             <p className="mb-[8px] font-semibold text-color5">
