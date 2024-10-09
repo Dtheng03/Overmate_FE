@@ -1,6 +1,6 @@
 function TermsCharter() {
     return (
-        <div className="min-h-screen bg-gray-100 p-6">
+        <div className="min-h-screen p-6 bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center">
             <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
                 <h1 className="text-3xl font-semibold mb-6 text-center">
                     Điều Khoản & Điều Lệ

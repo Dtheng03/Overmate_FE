@@ -83,7 +83,7 @@ function Header() {
                         < HoverCard openDelay={0} >
                             <HoverCardTrigger>
                                 <div className={`px-2 py-[4px] flex gap-x-[8px] items-center cursor-pointer ${isSelected}`}>
-                                    <p className="text-sm">Xin chào, {username}</p>
+                                    <p className="text-sm select-none">Xin chào, {username}</p>
                                     <UserIcon fill="white" height={16} width={16} />
                                 </div>
                             </HoverCardTrigger>

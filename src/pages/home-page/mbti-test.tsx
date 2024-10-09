@@ -76,8 +76,8 @@ function MbtiTest() {
     }, []);
 
     return (
-        <section className="min-h-[calc(100vh-58px)] px-4 py-8 bg-slate-100 flex flex-col items-center justify-evenly">
-            <h1 className="text-color1 font-extrabold text-3xl sm:text-4xl text-center">TRẮC NGHIỆM MBTI</h1>
+        <section className="min-h-[calc(100vh-58px)] px-4 py-8 bg-color1 bg-[url('./assets/imgs/background.png')] bg-cover bg-center flex flex-col items-center justify-evenly">
+            <h1 className="text-white font-extrabold text-3xl sm:text-4xl text-center">TRẮC NGHIỆM MBTI</h1>
             {!isFinished ? (
                 <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md mt-6">
                     <h2 className="text-xl font-bold mb-4">Câu hỏi {currentIndex + 1} - {Math.min(currentIndex + questionsPerPage, mergedItems.length)} / {mergedItems.length}</h2>
