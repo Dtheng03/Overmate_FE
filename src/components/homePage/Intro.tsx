@@ -8,7 +8,7 @@ function Intro() {
                 </p>
             </div>
             <div className="basis-3/5">
-                <img className="w-full" src="/intro.png" alt="Intro" />
+                <img className="w-full rounded-[20px]" src="/website.jpg" alt="Intro" />
             </div>
         </section>
     );
