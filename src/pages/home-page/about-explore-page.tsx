@@ -19,7 +19,7 @@ function AboutExplorePage() {
                     <div className={card}>
                         <h3 className={title}>CUNG HOÀNG ĐẠO</h3>
                         <p className={content}>
-                            Trong chiêm tinh học phương Tây, 12 cung Hoàng Đạo là mười hai cung 30°Của Hoàng Đạo, bắt đầu từ điểm xuân phân, còn được gọi là điểm đầu của Bạch Dương. Thứ tự của 12 cung Hoàng Đạo là Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Thiên Yết, Nhân Mã, Ma Kết, Bảo Bình và Song Ngư.
+                            Cung hoàng đạo là một hệ thống chiêm tinh học dựa trên vị trí của mặt trời, mặt trăng và các hành tinh trong các chòm sao khi một người được sinh ra. Cung hoàng đạo được chia thành 12 nhóm, mỗi nhóm kéo dài khoảng 30 ngày.
                         </p>
                     </div>
                 </div>
