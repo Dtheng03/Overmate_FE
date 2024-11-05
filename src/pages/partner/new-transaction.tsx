@@ -20,7 +20,7 @@ const schema = yup
         amount: yup
             .number()
             .integer("Giá phải là số nguyên")
-            .min(500000, "Số tiền phải lớn hơn hoặc bằng 500,000 đ")
+            .min(100000, "Số tiền phải lớn hơn hoặc bằng 100,000 đ")
             .required("Xin hãy nhập thông tin"),
         username: yup
             .string()
@@ -68,7 +68,7 @@ function NewTransaction() {
     } = useForm<FormValues>({
         resolver: yupResolver(schema),
         defaultValues: {
-            amount: 500000,  // Giá trị mặc định cho số tiền nạp
+            amount: 100000,  // Giá trị mặc định cho số tiền nạp
             username: username,  // Giá trị mặc định cho tên người dùng
         },
     });
@@ -79,14 +79,14 @@ function NewTransaction() {
     };
 
     return (
-        <section className="p-[4%] min-h-[calc(100vh-58px)">
+        <section className="p-[4%] min-h-[calc(100vh-58px)] bg-[url('./assets/imgs/background.png')] bg-cover bg-color1">
             <h1 className="mb-12 text-center text-color1 text-3xl font-extrabold uppercase">Thanh toán</h1>
             <div className="mx-auto p-0.5 rounded-[20px] bg-gradient-to-r from-[#011949] to-[#55A6CE] w-[900px]">
                 <div className={card}>
                     <div className="flex-1 bg-white rounded-2xl p-6 shadow-lg">
                         <h2 className="text-lg font-semibold text-color1 text-center mb-4">Hướng dẫn tạo giao dịch nạp tiền mới</h2>
                         <div className="space-y-2 text-gray-600">
-                            <p><span className="font-semibold text-color1">Bước 1:</span> Nhập số tiền muốn nạp (tối thiểu 500.000 đ)</p>
+                            <p><span className="font-semibold text-color1">Bước 1:</span> Nhập số tiền muốn nạp (tối thiểu 100.000 đ)</p>
                             <p><span className="font-semibold text-color1">Bước 2:</span> Nhập tên người dùng</p>
                             <p><span className="font-semibold text-color1">Bước 3:</span> Nhấn nút "Tạo mã QR"</p>
                             <p><span className="font-semibold text-color1">Bước 4:</span> Mở ví điện tử/ ứng dụng ngân hàng</p>

@@ -36,7 +36,7 @@ const schema = yup
     })
     .required();
 
-const input: string = "w-full h-[48px] mb-2";
+const input: string = "w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2";
 const error: string = "text-sm text-red-400";
 
 function SignUpService() {
@@ -114,14 +114,14 @@ function SignUpService() {
     };
 
     return (
-        <section className="min-h-[calc(100vh-58px)] py-8 flex justify-center px-4">
+        <section className="min-h-[calc(100vh-58px)] py-8 flex justify-center px-4 bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
             <form onSubmit={handleSubmit(onSubmit)} className="max-w-[816px] w-full">
-                <h1 className="my-4 text-2xl font-bold text-center text-color1">
+                <h1 className="my-4 text-2xl font-bold text-center text-color2">
                     Đăng ký dịch vụ
                 </h1>
                 <h3 className="text-color4 text-xl font-bold">Xin chào!</h3>
-                <p className="italic">Để bắt đầu, Quý vị có thể cung cấp những thông tin cơ bản dưới đây. Quý vị có thể sửa lại mục này sau nếu cần.</p>
-                <h2 className="my-4 text-xl font-bold text-center text-color1">Thông tin cơ bản</h2>
+                <p className="text-white italic">Để bắt đầu, Quý vị có thể cung cấp những thông tin cơ bản dưới đây. Quý vị có thể sửa lại mục này sau nếu cần.</p>
+                <h2 className="my-4 text-xl font-bold text-center text-color2">Thông tin cơ bản</h2>
                 <div className="grid gap-x-4 gap-y-4 grid-cols-1 md:grid-cols-2">
                     <div className="mb-4">
                         <Select onValueChange={(value) => setValue('CategoryId', value)}>

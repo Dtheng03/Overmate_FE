@@ -93,18 +93,18 @@ function SignUpPartner() {
     }
 
     return (
-        <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center px-4 sm:px-8">
+        <section className="min-h-[calc(100vh-58px)] py-8 flex items-center justify-center px-4 sm:px-8 bg-[url('./assets/imgs/backgroundAuth.png')] bg-cover bg-center bg-color1">
             <form onSubmit={handleSubmit(onSubmit)} className="max-w-md w-full mt-[-40px]">
                 <div className="flex items-center justify-center">
                     <img className="w-[200px]" src="/logoFull.png" alt="Logo" />
                 </div>
-                <h2 className="text-xl font-semibold text-center mb-4 mt-[-20px]">
+                <h2 className="text-xl font-semibold text-center mb-4 mt-[-20px] text-white">
                     Đăng ký tài khoản đối tác
                 </h2>
                 <div className="mb-4">
                     <Input
                         {...register("Email")}
-                        className="w-full h-[48px] mb-2"
+                        className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                         placeholder="Email"
                     />
                     <p className={error}>{errors.Email?.message}</p>
@@ -112,7 +112,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Input
                         {...register("Username")}
-                        className="w-full h-[48px] mb-2"
+                        className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                         placeholder="Tên người dùng"
                     />
                     <p className={error}>{errors.Username?.message}</p>
@@ -120,7 +120,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Input
                         {...register("Password")}
-                        className="w-full h-[48px] mb-2"
+                        className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                         type="password"
                         placeholder="Mật khẩu"
                     />
@@ -129,7 +129,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Input
                         {...register("PhoneNumber")}
-                        className="w-full h-[48px] mb-2"
+                        className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                         placeholder="Số điện thoại"
                     />
                     <p className={error}>{errors.PhoneNumber?.message}</p>
@@ -137,7 +137,7 @@ function SignUpPartner() {
                 <div className="mb-4">
                     <Select onValueChange={(value) => setValue('Location', value)}>
                         <SelectTrigger
-                            className="w-full h-[48px] mb-2"
+                            className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                             {...register("Location")}
                         >
                             <SelectValue placeholder="Tỉnh/Thành phố" />
@@ -152,7 +152,7 @@ function SignUpPartner() {
                     <div className="flex-1">
                         <Input
                             {...register("Dob")}
-                            className="w-full h-[48px] mb-2"
+                            className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                             type="date"
                         />
                         <p className={error}>{errors.Dob?.message}</p>
@@ -160,7 +160,7 @@ function SignUpPartner() {
                     <div className="flex-1">
                         <Select onValueChange={(value) => setValue('Gender', value)}>
                             <SelectTrigger
-                                className="w-full h-[48px] mb-2"
+                                className="w-full h-[48px] mb-2 text-white placeholder:text-white focus:outline-none focus:ring focus:border-color2"
                                 {...register("Gender")}
                             >
                                 <SelectValue placeholder="Giới tính" />
@@ -178,20 +178,20 @@ function SignUpPartner() {
                     <Checkbox id="terms" onCheckedChange={() => { setIsChecked(!isChecked) }} />
                     <label
                         htmlFor="terms"
-                        className="text-sm font-medium"
+                        className="text-sm font-medium text-white"
                     >
                         Bằng cách đăng ký này, tôi đồng ý với các chính sách trong <Link className="text-color2" to={"/safety-security"}>An toàn - Bảo mật</Link>, <Link className="text-color2" to={"/terms-charter"}>Điều khoản - Điều lệ</Link> và <Link className="text-color2" to={"/privacy-policy"}>Chính sách quyền riêng tư</Link> của OVERMATE.
                     </label>
                 </p>
                 {registerPartner.isPending ? (
-                    <Button disabled className="w-full mb-8">
+                    <Button disabled className="w-full mb-8 border-color2 border-[1px]">
                         <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                         Vui lòng chờ
                     </Button>
                 ) : (
-                    <MyButton classname="w-full mb-8" title="Đăng ký" disabled={!isChecked} />
+                    <MyButton classname="w-full mb-8 border-color2 border-[1px]" title="Đăng ký" disabled={!isChecked} />
                 )}
-                <p className="text-center text-sm">
+                <p className="text-center text-sm text-white">
                     Bạn đã có tài khoản?{" "}
                     <Link className="text-red-400" to="/sign-in">
                         Đăng nhập ngay
