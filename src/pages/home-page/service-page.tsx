@@ -45,7 +45,8 @@ function ServicePage() {
 
     useEffect(() => {
         refetch()
-    }, [params.categoryId])
+        window.scrollTo(0, 0);
+    }, [params.categoryId, pageNumber])
 
     return (
         <section className={section}>
