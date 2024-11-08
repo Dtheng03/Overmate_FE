@@ -48,6 +48,10 @@ function ServicePage() {
         window.scrollTo(0, 0);
     }, [params.categoryId, pageNumber])
 
+    useEffect(() => {
+        setPageNumber(1);
+    }, [params.categoryId]);
+
     return (
         <section className={section}>
             <h1 className={h1}>Dịch vụ {state?.categoryName}</h1>
