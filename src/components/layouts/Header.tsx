@@ -46,7 +46,7 @@ function Header() {
                 <Link to={"/about-us"} className={`${menuItem} ${pathname.includes("/about-us") && isSelected}`}>Về chúng tôi</Link>
                 <Link to={"/about-explore"} className={`${menuItem} ${pathname.includes("/about-explore") && isSelected}`}>Khám phá</Link>
                 <HoverCard openDelay={0}>
-                    <HoverCardTrigger>
+                    <HoverCardTrigger className="flex">
                         <span className={`${menuItem} cursor-pointer ${pathname.includes("/service") && isSelected}`}>Dịch vụ</span>
                     </HoverCardTrigger>
                     {(data?.data?.value?.items?.length > 0) ?
@@ -66,7 +66,6 @@ function Header() {
                                 ))}
                             </div>
                         </HoverCardContent>
-
                         :
                         <HoverCardContent className="z-[9999] w-[200px] text-white p-0.5 bg-gradient-to-b from-[#1c1e4e] to-[#55A6CE] border-0 rounded-none">
                             <div className="bg-color1 p-[4%]">

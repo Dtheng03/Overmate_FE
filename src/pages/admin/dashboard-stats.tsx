@@ -52,7 +52,7 @@ function DashboardStats() {
                     <h3 className="text-color1 text-lg font-bold text-center">Người dùng</h3>
                     <div className="mt-2 flex justify-between text-color1">
                         <div className="flex items-center gap-x-[4px] text-lg font-bold">
-                            {data?.data?.value?.numberUsersUntilToday} người
+                            {data?.data?.value?.numberUsersUntilToday - 1} người
                             <Up fill="white" height={16} width={16} />
                         </div>
                         <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[50%] bg-color1">
