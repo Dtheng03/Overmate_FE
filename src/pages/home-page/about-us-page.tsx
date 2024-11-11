@@ -5,12 +5,8 @@ function AboutUsPage() {
                 <div className="flex items-center gap-x-[4px] justify-center flex-wrap">
                     <img className="md:w-[600px]" src="/logoFull.png" alt="About1" />
                 </div>
-                <p className="mt-[-60px] text-white text-justify text-base">
-                    Nơi kết nối những bạn trẻ đồng điệu, phù hợp dựa trên tính cách, áp
-                    dụng các phương pháp thú vị như MBTI, cung hoàng đạo và thần số học.
-                    Bên cạnh đó, chúng tôi còn cung cấp các dịch vụ tiện ích như hỗ trợ
-                    chuyển nhà, đóng gói đồ đạc, tìm kiếm nhà ở, bảo trì và dọn dẹp,
-                    nhằm mang lại trải nghiệm sống chung thuận tiện và thoải mái cho mọi người.
+                <p className="mt-[-60px] text-white text-justify text-xl">
+                    Nền tảng kết nối dịch vụ vệ sinh và bảo trì điều hòa chất lượng cao, giúp bạn dễ dàng đặt lịch, theo dõi, và tận hưởng không gian sạch sẽ, tiện nghi.
                 </p>
             </div>
             <div className="w-[50%] mt-8 flex justify-end">

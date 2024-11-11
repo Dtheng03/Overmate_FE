@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StarIcon } from "../icons/commons";
 
-const trigger: string = "text-white data-[state=active]:bg-transparent data-[state=active]:text-color4";
+const trigger: string = "flex-1 rounded-[20px] text-base text-white data-[state=active]:bg-color2 data-[state=active]:text-color1";
 const h4: string = "mb-2 flex items-center gap-x-2 text-color1 font-bold text-lg";
 
 function Benefits() {
