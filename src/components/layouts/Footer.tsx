@@ -13,7 +13,7 @@ function Footer() {
                         <img className="w-[200px] mt-[-40px] ml-[-20px]" src="/logoFull.png" alt="Logo" />
                     </Link>
                     <p className={`${subtitle} mt-[-20px]`}>
-                        Nơi kết nối những bạn trẻ đồng điệu, phù hợp dựa trên tính cách, áp dụng các phương pháp thú vị như MBTI, cung hoàng đạo và thần số học. Bên cạnh đó chúng tôi còn cung cấp các dịch vụ tiện ích như hỗ trợ chuyển nhà, đóng gói đồ đạc, tìm kiếm nhà ở, bảo trì và dọn dẹp, nhằm mang lại trải nghiệm sống chung thuận tiện và thoải mái cho mọi người.
+                        Nền tảng kết nối dịch vụ vệ sinh và bảo trì điều hòa chất lượng cao, giúp bạn dễ dàng đặt lịch, theo dõi, và tận hưởng không gian sạch sẽ, tiện nghi.
                     </p>
                 </div>
                 <div className="w-full sm:w-full md:w-1/4 lg:w-fit md:max-w-[220px]">
